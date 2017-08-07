@@ -94,7 +94,7 @@ namespace migh.application
                 if (Session["user"] == null || lib.artist_list.Count == 0)
                 {
                     string su = "ftp://ftp.drivehq.com/migh.lib";
-                    string su_alt = "https://raw.githubusercontent.com/505darksoft/migh.admin/master/migh.admin/bin/Debug/migh.lib";
+                    string su_alt = System.Configuration.ConfigurationManager.AppSettings["libsource"];
                     string u = "505darksoft2";
                     string p = "poder123";
 

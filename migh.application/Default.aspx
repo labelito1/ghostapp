@@ -243,24 +243,25 @@
         }
 
         ol li {
+            padding: 11px;
             text-overflow:ellipsis;
             /*border-bottom-color: #181818;
             border-bottom-style: outset;
             border-bottom-width: 2px;
             border-bottom-left-radius: 1px;
             border-bottom-right-radius: 1px;*/
-            /*background: #181818;*/
+            background: #2d2d2d;
             list-style-type: none;
-            margin-left: 1px;
-            margin-bottom: 15px;
-            /*margin: 5px;*/
-            border-radius: 2px;
+            /*margin-left: 1px;*/
+            /*margin-bottom: 15px;*/
+            margin: 5px;
+            border-radius: 3px;
             color: #FBFBFB;
             font-family: Verdana;
             font-size: 10px;
             background-clip: padding-box;
-            /*height: 40px;
-            line-height: 50px;*/
+            height: 32px;
+            /*line-height: 50px;*/
             /*padding-left: 10px;*/
         }
         .noselect {
@@ -472,9 +473,9 @@
     <div id="optiondiv" class="panel panel-primary" style="display:none; text-align:center; background-color: black; background-size:contain; background-position:center top; width: 100% auto; margin: 0 auto; max-width: 100%; max-height: 100px">
         <div style="height:100%; vertical-align:middle">
             <span style="display: inline-block; height: 100%; vertical-align: middle; visibility:hidden"></span>
-            <img alt="gotoalbum" src="images/album.png" style="width: 30px; height: 30px; vertical-align:middle; margin-right:10px"/>
+            <img alt="gotoalbum" src="images/album.png" style="width: 35px; height: 35px; vertical-align:middle; margin-right:10px"/>
             
-            <img alt="gotoartist" src="images/artist.png" style="width: 30px; height: 30px; vertical-align:middle; margin-left:10px"/>
+            <img alt="gotoartist" src="images/artist.png" style="width: 35px; height: 35px; vertical-align:middle; margin-left:10px"/>
         </div>
     </div>
     <div id="footer" style="background-color: black">
@@ -731,7 +732,7 @@
                     }
                 });
                 
-                document.getElementById('txtSearch').focus();
+                //document.getElementById('txtSearch').focus();
             }else{
                 document.getElementById('txtSearch').focus();
                 //hideSearchBar();
@@ -764,7 +765,6 @@
             var target = getEventTarget(event);
             
             if(target.getAttribute('alt') == 'gotoartist') {
-                
                 unfade(target);
                 var songid = getCookie('nowplaying');
                 PageMethods.getArtistBySongId(parseInt(songid), set1);
@@ -779,46 +779,56 @@
                             break;
                         }
                     }
-                    $(form).animate({ scrollTop: 295 }, 500, function(){
-                        $('#optiondiv').slideToggle();
-                    });
+                    //$('#optiondiv').slideToggle("fast", function () {
+                        $(form).animate({ scrollTop: 295 }, 400, function () {
+                            var songid = getCookie('nowplaying');
+                            PageMethods.getArtistBySongId(parseInt(songid), set1);
+                            function set1(response) {
+                                var id = response;
+                                var listArtists = document.getElementById('listArtists');
+                                for (i = 0; i < listArtists.length; i++) {
+                                    var artist = listArtists[i];
+                                    if (parseInt(artist.value) === parseInt(id)) {
+                                        document.getElementById('listArtists').selectedIndex = i;
+                                        __doPostBack('<%= listArtists.UniqueID %>', '');
+                                        break;
+                                    }
+                                }
+                            }
+                        });
+                    //});
                 }
             }
             if(target.getAttribute('alt') == 'gotoalbum') {
                 unfade(target);
-                var songid = getCookie('nowplaying');
-                PageMethods.getArtistBySongId(songid, set2);
-                function set2(response){
-                    var artist_id = parseInt(response);
-                    var listArtists = document.getElementById('listArtists');;
-                    for(i = 0; i < listArtists.length; i++) {
-                        artist = listArtists[i];
-                        if (parseInt(artist.value) === parseInt(artist_id)) {
-                            document.getElementById('listArtists').selectedIndex = i;
-                            __doPostBack('<%= listArtists.UniqueID %>', '');
-
-                            ////
-                            localStorage.setItem('searching', true);
-                            PageMethods.getAlbumBySongId(songid, open);
-                            function open(response) {
-                                localStorage.setItem('search_album_id', response);
-                                selectAlbum(response);
-                                
+                //$('#optiondiv').slideToggle("fast", function () {
+                    $(form).animate({ scrollTop: 495 }, 400, function () {
+                        var songid = getCookie('nowplaying');
+                        PageMethods.getArtistBySongId(songid, set2);
+                        function set2(response) {
+                            var artist_id = parseInt(response);
+                            var listArtists = document.getElementById('listArtists');;
+                            for (i = 0; i < listArtists.length; i++) {
+                                artist = listArtists[i];
+                                if (parseInt(artist.value) === parseInt(artist_id)) {
+                                    document.getElementById('listArtists').selectedIndex = i;
+                                    __doPostBack('<%= listArtists.UniqueID %>', '');
+                                    localStorage.setItem('searching', true);
+                                    PageMethods.getAlbumBySongId(songid, open);
+                                    function open(response) {
+                                        localStorage.setItem('search_album_id', response);
+                                        selectAlbum(response);
+                                    }
+                                    break;
+                                }
                             }
-                            break;
-                            
-                            ////
                         }
-                    }
-                    $(form).animate({ scrollTop: 495 }, 500, function(){
-                        $('#optiondiv').slideToggle();
                     });
-                }
+                //});
             }
-            
         }
         var ul = document.getElementById('tracklist');
-        ul.onclick = function (event) {
+        ul.ondblclick = function (event) {
             var target = getEventTarget(event);
             if (target.getAttribute('type') == 'imgplay') {
                 unfade(target);
@@ -874,33 +884,31 @@
                 //document.body.scrollTop = 500;
                 $( "#resultdiv" ).slideUp( "fast", function() {
                     $('#tdSearch').slideUp("fast");
-                    $('#searchdiv').slideUp("fast", function(){
-                        $(form).animate({ scrollTop: 495 }, 500);
+                    $('#searchdiv').slideUp("fast", function () {
+                        $(form).animate({ scrollTop: 495 }, 400, function () {
+                            var album_id = target.id;
+                            PageMethods.getArtistByAlbumId(album_id, set);
+                            function set(response) {
+                                var artist_id = parseInt(response);
+                                var listArtists = document.getElementById('listArtists');;
+                                for (i = 0; i < listArtists.length; i++) {
+                                    artist = listArtists[i];
+                                    if (parseInt(artist.value) === parseInt(artist_id)) {
+                                        document.getElementById('listArtists').selectedIndex = i;
+                                        __doPostBack('<%= listArtists.UniqueID %>', '');
+                                        localStorage.setItem('searching', true);
+                                        localStorage.setItem('search_album_id', album_id);
+                                        selectAlbum(album_id);
+                                        break;
+                                    }
+                                }
+                            }
+                        });
                     });
                 });
                 
                 //hideSearchBar();
-                var album_id = target.id;
-
-                PageMethods.getArtistByAlbumId(album_id, set);
-                function set(response){
-                    var artist_id = parseInt(response);
-                    var listArtists = document.getElementById('listArtists');;
-                    for(i = 0; i < listArtists.length; i++) {
-                        artist = listArtists[i];
-                        if (parseInt(artist.value) === parseInt(artist_id)) {
-                            document.getElementById('listArtists').selectedIndex = i;
-                            __doPostBack('<%= listArtists.UniqueID %>', '');
-
-                            ////
-                            localStorage.setItem('searching', true);
-                            localStorage.setItem('search_album_id', album_id);
-                            selectAlbum(album_id);
-                            break;
-                            ////
-                        }
-                    }
-                }
+                
             }
             
             if (type === 'artist') {
@@ -909,21 +917,22 @@
                 $( "#resultdiv" ).slideUp( "fast", function() {
                     $('#tdSearch').slideUp("fast");
                     $('#searchdiv').slideUp("fast", function(){
-                        $(form).animate({ scrollTop: 295 }, 500);
+                        $(form).animate({ scrollTop: 295 }, 400, function () {
+                            var id = target.id;
+                            var listArtists = document.getElementById('listArtists');
+
+                            for (i = 0; i < listArtists.length; i++) {
+                                artist = listArtists[i];
+                                if (artist.value === id) {
+                                    document.getElementById('listArtists').selectedIndex = i;
+                                    __doPostBack('<%= listArtists.UniqueID %>', '');
+                                    break;
+                                }
+                            }
+                        });
                     });
                 });
                 //hideSearchBar();
-                var id = target.id;
-                var listArtists = document.getElementById('listArtists');
-
-                for(i = 0; i < listArtists.length; i++) {
-                    artist = listArtists[i];
-                    if (artist.value === id) {
-                        document.getElementById('listArtists').selectedIndex = i;
-                        __doPostBack('<%= listArtists.UniqueID %>', '');
-                        break;
-                    }
-                }
             }
         };
         function selectAlbum(album_id) {
@@ -1052,8 +1061,16 @@
                 duration.innerHTML = '00:00'; 
                 //duration.style.marginLeft = '78%';
                 duration.style.cssFloat = 'right';
-                duration.style.marginTop = '5px';
-                
+                //duration.style.marginTop = '3px';
+                //span
+                var helper = document.createElement('span');
+                helper.style.display = 'inline-block';
+                helper.style.height = '100%';
+                helper.style.verticalAlign = 'middle';
+                helper.style.visibility = 'hidden';
+                //<span style="display: inline-block; height: 100%; vertical-align: middle; visibility:hidden"></span>
+
+                //
                 img.id = i;
                 img.setAttribute('type', 'imgplay');
                 img.src = 'images/song.png';
@@ -1065,7 +1082,7 @@
                 img.style.marginRight = '10px';
                 img.style.styleFloat = 'left';
                 li.setAttribute('id', idlist[i]);
-                li.appendChild(img);
+                //li.appendChild(img);
                 li.style.whiteSpace = 'nowrap';
                 //li.style.width = '90%';
                 var label = document.createElement('label');
@@ -1076,11 +1093,14 @@
                 label.id = i;
                 duration.id = i;
                 duration.setAttribute('type', 'imgplay');
-                label.innerHTML = (i+1) + '. ' + tracklist[i];
+                label.innerHTML = (i + 1) + '. ' + tracklist[i];
+                //li.appendChild(helper);
                 li.appendChild(label);
                 li.appendChild(duration);
                 li.style.overflow = 'hidden';
                 li.style.verticalAlign = 'middle';
+                li.setAttribute('type', 'imgplay');
+                li.id = i;
                 //li.style.maxWidth = '400px';
                 ol.appendChild(li);
             }
