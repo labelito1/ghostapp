@@ -48,7 +48,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="migh.api, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\migh.api\migh.api\bin\Debug\migh.api.dll</HintPath>
+      <HintPath>..\migh.api.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>

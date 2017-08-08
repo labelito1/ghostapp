@@ -582,7 +582,7 @@
             });
         };
 
-        function fillCovers(srcs, albumnames, artistname, idlist) {
+        function fillCovers(srcs, albumnames, artistname, idlist, yearlist) {
             //$('#coverdiv').slideUp("slow");
             $('img').on('dragstart', function(event) { event.preventDefault(); });
             document.getElementById('albumlist').innerHTML = "";
@@ -611,7 +611,8 @@
                 year.className = 'searchtext dark';
                 year.style.width = '120px';
                 year.style.fontSize = '8px';
-                year.innerHTML = 'yyyy';
+                year.style.paddingTop = '3px';
+                year.innerHTML = yearlist[i];
                 //year.style.paddingTop = '3px';
 
                 img.alt = albumnames[i] + "@" + artistname + "@" + idlist[i];
@@ -1052,7 +1053,7 @@
 
         });
         //
-        function playTrack(tracklist, idlist) {
+        function playTrack(tracklist, idlist, durations, tracknumbers) {
             //$("#tracklist").slideUp();
                 
             var ol = document.getElementById('tracklist');
@@ -1064,7 +1065,7 @@
 
                 var duration = document.createElement('label');
                 duration.className = 'dark';
-                duration.innerHTML = '00:00'; 
+                duration.innerHTML = durations[i]; 
                 //duration.style.marginLeft = '78%';
                 duration.style.cssFloat = 'right';
                 duration.style.marginTop = '11px';
@@ -1099,7 +1100,7 @@
                 label.id = i;
                 duration.id = i;
                 duration.setAttribute('type', 'imgplay');
-                label.innerHTML = (i + 1) + '. ' + tracklist[i];
+                label.innerHTML = tracknumbers[i] + '. ' + tracklist[i];
                 //li.appendChild(helper);
                 var div = document.createElement('div');
                 div.id = i;
@@ -1455,7 +1456,7 @@
             var duration = date2.toISOString().substr(14, 5);
             document.getElementById('currentTime').innerHTML = currentTime;
             document.getElementById('duration').innerHTML = duration;
-            updatemetadata();
+            //updatemetadata();
         });
         document.getElementById('seekbar').addEventListener('click', function (e) {
             var x = e.pageX - this.offsetLeft, // or e.offsetX (less support, though)

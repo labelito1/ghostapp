@@ -167,7 +167,7 @@ namespace migh.application
                     Song song = songs.ElementAt(index);
                     Artist artist = Artist.get(lib.artist_list, song.artist_id);
                     Album album = Album.get(lib.album_list, song.album_id);
-                    res = string.Format(lib.configuration.AudioFileURLFormat, artist.url_name, album.url_name, Tools.ConvertToGitHubFile(song.file_name, lib.configuration.GitHubFile_TextToReplace_List));
+                    res = string.Format(lib.configuration.AudioFileURLFormat, Tools.ConvertToGitHubFolder(artist.name), Tools.ConvertToGitHubFolder(album.name), Song.getFileFormat(song));
                 }
             }
             return res;
@@ -189,7 +189,7 @@ namespace migh.application
                     {
                         Album album = Album.get(lib.album_list, song.album_id);
                         Artist artist = Artist.get(lib.artist_list, song.artist_id);
-                        url = string.Format(lib.configuration.AudioFileURLFormat, artist.url_name, album.url_name, Tools.ConvertToGitHubFile(song.file_name, lib.configuration.GitHubFile_TextToReplace_List));
+                        url = string.Format(lib.configuration.AudioFileURLFormat, Tools.ConvertToGitHubFolder(artist.name), Tools.ConvertToGitHubFolder(album.name), Song.getFileFormat(song));
                         return url;
                     }
                 }
@@ -212,7 +212,7 @@ namespace migh.application
                     Song song = songs.ElementAt(index);
                     Artist artist = Artist.get(lib.artist_list, song.artist_id);
                     Album album = Album.get(lib.album_list, song.album_id);
-                    res = string.Format(lib.configuration.AlbumCoverImageFileURLFormat, artist.url_name, album.url_name);
+                    res = string.Format(lib.configuration.AlbumCoverImageFileURLFormat, Tools.ConvertToGitHubFolder(artist.name), Tools.ConvertToGitHubFolder(album.name));
                 }
             }
             return res;
@@ -308,7 +308,7 @@ namespace migh.application
                         Song nextSong = songs.ElementAt(index + 1);
                         Artist artist = Artist.get(lib.artist_list, nextSong.artist_id);
                         Album album = Album.get(lib.album_list, nextSong.album_id);
-                        url = string.Format(lib.configuration.AudioFileURLFormat, artist.url_name, album.url_name, Tools.ConvertToGitHubFile(nextSong.file_name, lib.configuration.GitHubFile_TextToReplace_List));
+                        url = string.Format(lib.configuration.AudioFileURLFormat, Tools.ConvertToGitHubFolder(artist.name), Tools.ConvertToGitHubFolder(album.name), Song.getFileFormat(nextSong));
                         setNowplaying(nextSong.id);
                         return url;
                     }
@@ -335,7 +335,7 @@ namespace migh.application
                         Song previousSong = songs.ElementAt(index - 1);
                         Artist artist = Artist.get(lib.artist_list, previousSong.artist_id);
                         Album album = Album.get(lib.album_list, previousSong.album_id);
-                        url = string.Format(lib.configuration.AudioFileURLFormat, artist.url_name, album.url_name, Tools.ConvertToGitHubFile(previousSong.file_name, lib.configuration.GitHubFile_TextToReplace_List));
+                        url = string.Format(lib.configuration.AudioFileURLFormat, Tools.ConvertToGitHubFolder(artist.name), Tools.ConvertToGitHubFolder(album.name), Song.getFileFormat(previousSong));
                         setNowplaying(previousSong.id);
                         return url;
                     }
@@ -357,38 +357,29 @@ namespace migh.application
                 listSongs.Items.Clear();
                 listSongs.Items.Add("(Canción)");
                 Artist artist = Artist.get(lib.artist_list, Convert.ToInt32(listArtists.SelectedValue));
-
-                if(artist != null)
+                IEnumerable<Album> tempList = lib.album_list.Where(a => a.artist_id == artist.id);
+                IEnumerable<Album> sortedList = tempList.OrderBy(o => o.year);
+                if (artist != null)
                 {
                     List<string> albumimg = new List<string>();
                     List<string> albumname = new List<string>();
+                    List<string> year = new List<string>();
                     List<int> id = new List<int>();
-
-                    foreach(Album album in lib.album_list)
+                    
+                    foreach(Album album in sortedList)
                     {
                         if(album.artist_id == artist.id)
                         {
-                            albumimg.Add(string.Format(lib.configuration.AlbumCoverImageFileURLFormat, artist.url_name, album.url_name));
+                            albumimg.Add(string.Format(lib.configuration.AlbumCoverImageFileURLFormat, Tools.ConvertToGitHubFolder(artist.name), Tools.ConvertToGitHubFolder(album.name)));
                             albumname.Add(album.name);
+                            year.Add(album.year.ToString());
                             id.Add(album.id);
                             artistname = artist.name;
                             ListItem item = new ListItem();
                             item.Text = album.name;
                             item.Value = album.id.ToString();
                             listAlbums.Items.Add(item);
-                            //foreach(Song song in lib.song_list)
-                            //{
-                            //    if(song.artist_id == artist.id)
-                            //    {
-                            //        ListItem itemSong = new ListItem();
-                            //        itemSong.Text = song.name;
-                            //        itemSong.Value = song.id.ToString();
-                            //        if(!listSongs.Items.Contains(itemSong))
-                            //        {
-                            //            listSongs.Items.Add(itemSong);
-                            //        }
-                            //    }
-                            //}
+
                         }
                     }
                     listAlbums.SelectedIndex = 0;
@@ -397,7 +388,8 @@ namespace migh.application
                     var aname = Newtonsoft.Json.JsonConvert.SerializeObject(artistname);
                     var acovers = Newtonsoft.Json.JsonConvert.SerializeObject(albumimg.ToArray<string>());
                     var ids = Newtonsoft.Json.JsonConvert.SerializeObject(id.ToArray<int>());
-                    ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "text", "fillCovers(" + acovers + "," + albumnames + "," + aname + "," + ids + ")", true);
+                    var years = Newtonsoft.Json.JsonConvert.SerializeObject(year.ToArray<string>());
+                    ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "text", "fillCovers(" + acovers + "," + albumnames + "," + aname + "," + ids + "," + years + ")", true);
                 }
             }
             else
@@ -433,10 +425,15 @@ namespace migh.application
                 Album album = Album.get(lib.album_list, Convert.ToInt32(listAlbums.SelectedValue));
                 List<string> tracks = new List<string>();
                 List<int> ids = new List<int>();
+                List<string> duration = new List<string>();
+                List<int> tracknumber = new List<int>();
+                IEnumerable<Song> tempList = lib.song_list.Where(a => a.album_id == album.id);
+                IEnumerable<Song> sortedList = tempList.OrderBy(o => o.Track);
+
                 int tracki = 1;
                 if (album != null)
                 {
-                    foreach (Song song in lib.song_list)
+                    foreach (Song song in sortedList)
                     {
                         if (song.album_id == album.id)
                         {
@@ -445,7 +442,9 @@ namespace migh.application
                             item.Value = song.id.ToString();
                             tracks.Add(song.name);
                             ids.Add(song.id);
-                            if(!listSongs.Items.Contains(item))
+                            duration.Add(song.duration.ToString("mm\\:ss"));
+                            tracknumber.Add(Convert.ToInt32(song.Track));
+                            if (!listSongs.Items.Contains(item))
                             {
                                 listSongs.Items.Add(item);
                             }
@@ -455,7 +454,10 @@ namespace migh.application
                     listSongs.SelectedIndex = 0;
                     var tracklist = Newtonsoft.Json.JsonConvert.SerializeObject(tracks.ToArray<string>());
                     var idlist = Newtonsoft.Json.JsonConvert.SerializeObject(ids.ToArray<int>());
-                    ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "text", "playTrack(" + tracklist + "," + idlist +")", true);
+                    var durations = Newtonsoft.Json.JsonConvert.SerializeObject(duration.ToArray<string>());
+                    var tracknumbers = Newtonsoft.Json.JsonConvert.SerializeObject(tracknumber.ToArray<int>());
+
+                    ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "text", "playTrack(" + tracklist + "," + idlist + "," + durations + "," + tracknumbers + ")", true);
                 }
             }
             else
@@ -572,7 +574,7 @@ namespace migh.application
                     a.id = alb.id;
                     a.name = alb.name;
                     a.artist = art.name;
-                    a.cover = string.Format(lib.configuration.AlbumCoverImageFileURLFormat, art.url_name, alb.url_name);
+                    a.cover = string.Format(lib.configuration.AlbumCoverImageFileURLFormat,  Tools.ConvertToGitHubFolder(art.name), Tools.ConvertToGitHubFolder(alb.name));
                     list.Add(a);
                 //}
             }
@@ -614,8 +616,8 @@ namespace migh.application
             Song song = lib.song_list.First(s => s.id == Convert.ToInt32(id));
             Artist artist = Artist.get(lib.artist_list, song.artist_id);
             Album album = Album.get(lib.album_list, song.album_id);
-            string url = string.Format(lib.configuration.AudioFileURLFormat, artist.url_name, album.url_name, Tools.ConvertToGitHubFile(song.file_name, lib.configuration.GitHubFile_TextToReplace_List));
-            string cover = string.Format(lib.configuration.AlbumCoverImageFileURLFormat, artist.url_name, album.url_name);
+            string url = string.Format(lib.configuration.AudioFileURLFormat, Tools.ConvertToGitHubFolder(artist.name), Tools.ConvertToGitHubFolder(album.name), Song.getFileFormat(song));
+            string cover = string.Format(lib.configuration.AlbumCoverImageFileURLFormat, Tools.ConvertToGitHubFolder(artist.name), Tools.ConvertToGitHubFolder(album.name));
             str.name = song.name;
             str.album = album.name;
             str.artist = artist.name;
@@ -641,7 +643,7 @@ namespace migh.application
                         s.id = a.id;
                         s.name = a.name;
                         s.artist = artist.name;
-                        s.cover = string.Format(lib.configuration.AlbumCoverImageFileURLFormat, artist.url_name, a.url_name);
+                        s.cover = string.Format(lib.configuration.AlbumCoverImageFileURLFormat, Tools.ConvertToGitHubFolder(artist.name), Tools.ConvertToGitHubFolder(a.name));
                         album.Add(s);
                     }
 

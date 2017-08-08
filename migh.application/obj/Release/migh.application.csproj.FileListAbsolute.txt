@@ -40,6 +40,7 @@ C:\GitHub\ghostapp\migh.application\bin\migh.application.dll
 C:\GitHub\ghostapp\migh.application\bin\migh.application.pdb
 C:\GitHub\ghostapp\migh.application\bin\AjaxControlToolkit.dll
 C:\GitHub\ghostapp\migh.application\bin\JsonTools.dll
+C:\GitHub\ghostapp\migh.application\bin\migh.api.dll
 C:\GitHub\ghostapp\migh.application\bin\Newtonsoft.Json.dll
 C:\GitHub\ghostapp\migh.application\bin\System.Net.Http.Formatting.dll
 C:\GitHub\ghostapp\migh.application\bin\System.Web.Http.dll
@@ -50,4 +51,3 @@ C:\GitHub\ghostapp\migh.application\bin\System.Web.Http.xml
 C:\GitHub\ghostapp\migh.application\bin\System.Web.Http.WebHost.xml
 C:\GitHub\ghostapp\migh.application\obj\Release\migh.application.dll
 C:\GitHub\ghostapp\migh.application\obj\Release\migh.application.pdb
-C:\GitHub\ghostapp\migh.application\obj\Release\migh.application.csprojResolveAssemblyReference.cache
