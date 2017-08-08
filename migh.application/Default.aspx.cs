@@ -247,7 +247,7 @@ namespace migh.application
                     int index = Convert.ToInt32(HttpContext.Current.Session["currentSongIndex"]);
                     Song song = songs.ElementAt(index);
                     Artist artist = Artist.get(lib.artist_list, song.artist_id);
-                    res = artist.name;
+                    res = song.JoinedPerformers.Replace(';', ',');
                 }
             }
             return res;
@@ -606,6 +606,7 @@ namespace migh.application
             public string name { get; set; }
             public string album { get; set; }
             public string artist { get; set; }
+            public string JoinedPerformers { get; set; }
             public string cover { get; set; }
             public string url { get; set; }
         }
@@ -618,6 +619,8 @@ namespace migh.application
             Album album = Album.get(lib.album_list, song.album_id);
             string url = string.Format(lib.configuration.AudioFileURLFormat, Tools.ConvertToGitHubFolder(artist.name), Tools.ConvertToGitHubFolder(album.name), Song.getFileFormat(song));
             string cover = string.Format(lib.configuration.AlbumCoverImageFileURLFormat, Tools.ConvertToGitHubFolder(artist.name), Tools.ConvertToGitHubFolder(album.name));
+            str.JoinedPerformers = song.JoinedPerformers.Replace(';', ',');
+
             str.name = song.name;
             str.album = album.name;
             str.artist = artist.name;

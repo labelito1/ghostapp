@@ -8,6 +8,13 @@
 <head runat="server">
     <style>
         #optiondiv {
+            border-top-style:solid;
+            border-bottom-style:solid;
+            border-left-style:solid;
+            border-right-style:solid;
+            border-width:2px;
+            border-color:#404040;
+            
             border-radius:4px;
             height: 40px;
             right:33.33%;
@@ -15,7 +22,7 @@
             color:white;
             
             position:fixed;
-            bottom:70px;
+            bottom:71px;
             
             margin-left: -50%; /* Negative half of width. */
         }
@@ -27,10 +34,10 @@
           -user-drag: none;
         }
         #UpdatePanel2 {
-            border-radius: 4px;
+            /*border-radius: 4px;
             border-style: solid;
             border-color: #181818;
-            border-width: 2px;
+            border-width: 2px;*/
         }
         input[type=text] {
             outline: none;
@@ -739,7 +746,7 @@
                     }
                 });
                 
-                //document.getElementById('txtSearch').focus();
+                document.getElementById('txtSearch').focus();
             }else{
                 document.getElementById('txtSearch').focus();
                 //hideSearchBar();
@@ -802,6 +809,7 @@
                                     }
                                 }
                             }
+                            $('#optiondiv').slideToggle("fast");
                         });
                     //});
                 }
@@ -830,6 +838,7 @@
                                 }
                             }
                         }
+                        $('#optiondiv').slideToggle("fast");
                     });
                 //});
             }
@@ -859,12 +868,12 @@
                     document.getElementById('audio').src = track.url;
                     setTitle(track.name);
                     setAlbum(track.album);
-                    setArtist(track.artist);
+                    setArtist(track.JoinedPerformers);
                     setCover(track.cover);
                     if ('mediaSession' in navigator) {
                         navigator.mediaSession.metadata = new MediaMetadata({
                             title: track.name,
-                            artist: track.artist,
+                            artist: track.JoinedPerformers,
                             album: track.album,
                             artwork: [{ src: track.cover }], 
                         });
@@ -1423,14 +1432,18 @@
         });
         $('#play').on('click', function () {
             var btn = document.getElementById('play');
-            unfade(btn);
-            if (audio.paused) {
-                audio.play();
-                play.setAttribute('src', 'images/pause.png');
-            } else {
-                audio.pause();
-                play.setAttribute('src', 'images/play.png');
+            if (document.getElementById('audio').src != '')
+            {
+                unfade(btn);
+                if (audio.paused) {
+                    audio.play();
+                    play.setAttribute('src', 'images/pause.png');
+                } else {
+                    audio.pause();
+                    play.setAttribute('src', 'images/play.png');
+                }
             }
+            
             //updatemetadata();
         });
 
