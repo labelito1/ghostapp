@@ -243,7 +243,9 @@
         }
 
         ol li {
-            padding: 11px;
+            /*padding: 11px;*/
+            padding-left: 5px;
+            padding-right:5px;
             text-overflow:ellipsis;
             /*border-bottom-color: #181818;
             border-bottom-style: outset;
@@ -426,11 +428,15 @@
                     <img id="imgSongCoverTop" alt="imgSongCover" style="height:60px; display:none; width:60px; vertical-align:middle" src="images/default_album.png" />
                 </td>
                 <td id="tdTag" style="text-align:center; width:100%; vertical-align:middle; height:100%">
-                    <label id="lblSongTitle" style="font-family:Verdana; font-size:10px; color:#FBFBFB">Título</label>
-                    <br />
-                    <label id="lblSongArtist" style="font-family:Verdana; font-size:10px; color:#97A09B">Artista</label>
-                    <br />
-                    <label id="lblSongAlbum" style="font-family:Verdana; font-size:10px; color:#FBFBFB">Álbum</label>
+                    <div style="height:100%; width:100%; display:grid">
+                        <span style="display: inline-block; height: 100%; vertical-align: top; visibility:hidden"></span>
+                        <label id="lblSongTitle" style="font-family:Verdana; font-size:10px; color:#FBFBFB">Título</label>
+                        <%--<br />--%>
+                        <label id="lblSongArtist" style="font-family:Verdana; font-size:10px; color:#97A09B">Artista</label>
+                        <%--<br />--%>
+                        <label id="lblSongAlbum" style="font-family:Verdana; font-size:10px; color:#FBFBFB">Álbum</label>
+                    </div>
+                    
                 </td>
                 <td style="text-align: left; width:65px">
                     <img id="goTop" alt="imgSongCover" style="height:32px; display:none; width:32px" src="images/uparrow.png" />
@@ -1061,7 +1067,7 @@
                 duration.innerHTML = '00:00'; 
                 //duration.style.marginLeft = '78%';
                 duration.style.cssFloat = 'right';
-                //duration.style.marginTop = '3px';
+                duration.style.marginTop = '11px';
                 //span
                 var helper = document.createElement('span');
                 helper.style.display = 'inline-block';
@@ -1095,12 +1101,22 @@
                 duration.setAttribute('type', 'imgplay');
                 label.innerHTML = (i + 1) + '. ' + tracklist[i];
                 //li.appendChild(helper);
-                li.appendChild(label);
-                li.appendChild(duration);
-                li.style.overflow = 'hidden';
+                var div = document.createElement('div');
+                div.style.height = '100%';
+                div.setAttribute('type', 'imgplay');
+                var helper = document.createElement('span');
+                helper.style.display = 'inline-block';
+                helper.style.height = '100%';
+                helper.style.verticalAlign = 'middle';
+                helper.style.visibility = 'hidden';
+                div.appendChild(helper);
+                div.appendChild(label);
+                div.appendChild(duration);
+                div.style.overflow = 'hidden';
                 li.style.verticalAlign = 'middle';
                 li.setAttribute('type', 'imgplay');
                 li.id = i;
+                li.appendChild(div);
                 //li.style.maxWidth = '400px';
                 ol.appendChild(li);
             }
