@@ -358,7 +358,7 @@ namespace migh.application
                 listSongs.Items.Add("(Canción)");
                 Artist artist = Artist.get(lib.artist_list, Convert.ToInt32(listArtists.SelectedValue));
                 IEnumerable<Album> tempList = lib.album_list.Where(a => a.artist_id == artist.id);
-                IEnumerable<Album> sortedList = tempList.OrderBy(o => o.year);
+                IEnumerable<Album> sortedList = tempList.OrderByDescending(o => o.year);
                 if (artist != null)
                 {
                     List<string> albumimg = new List<string>();
