@@ -1102,6 +1102,7 @@
                 label.innerHTML = (i + 1) + '. ' + tracklist[i];
                 //li.appendChild(helper);
                 var div = document.createElement('div');
+                div.id = i;
                 div.style.height = '100%';
                 div.setAttribute('type', 'imgplay');
                 var helper = document.createElement('span');
