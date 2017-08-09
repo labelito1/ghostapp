@@ -16,7 +16,7 @@
             border-color:#404040;
             
             border-radius:4px;
-            height: 40px;
+            height: auto;
             right:33.33%;
             left: 33.33%;
             color:white;
@@ -259,7 +259,7 @@
             border-bottom-width: 2px;
             border-bottom-left-radius: 1px;
             border-bottom-right-radius: 1px;*/
-            background: #2d2d2d;
+            background: #353535;
             list-style-type: none;
             /*margin-left: 1px;*/
             /*margin-bottom: 15px;*/
@@ -483,12 +483,17 @@
         </table>
         </div>
     </div>
-    <div id="optiondiv" class="panel panel-primary" style="display:none; text-align:center; background-color: black; background-size:contain; background-position:center top; width: 100% auto; margin: 0 auto; max-width: 100%; max-height: 100px">
+    <div id="optiondiv" class="panel panel-primary" style="display:none; text-align:center; background-color: black; background-size:contain; background-position:center top; width: 100% auto; margin: 0 auto; max-width: 100%">
+        <label class="dark">Ir a...</label>
         <div style="height:100%; vertical-align:middle">
             <span style="display: inline-block; height: 100%; vertical-align: middle; visibility:hidden"></span>
             <img alt="gotoalbum" src="images/album.png" style="width: 35px; height: 35px; vertical-align:middle; margin-right:10px"/>
             
             <img alt="gotoartist" src="images/artist.png" style="width: 35px; height: 35px; vertical-align:middle; margin-left:10px"/>
+            <div id="btnAudioFormat" style="height: 30px/*; border-style: solid; border-width: 2px; border-color: #404040;*/">
+                <span style="display: inline-block; height: 100%; vertical-align: middle; visibility:hidden"></span>
+                <label id="lblAudioFormat" class="dark" style="pointer-events:none"></label>
+            </div>
         </div>
     </div>
     <div id="footer" style="background-color: black">
@@ -724,7 +729,7 @@
         var btnopenmenu = document.getElementById('openmenu');
         openmenu.onclick = function (event) {
             unfade(btnopenmenu);
-            $('#optiondiv').slideToggle();
+            $('#optiondiv').slideToggle("fast");
         }
 
         function gotoalbum(id) {
@@ -777,7 +782,12 @@
             var form = document.getElementById('form1');
             
             var target = getEventTarget(event);
-            
+            if (target.id == 'btnAudioFormat') {
+                PageMethods.switchAudioFormat(setaudioformat);
+                function setaudioformat() {
+                    getAudioFormat();
+                }
+            }
             if(target.getAttribute('alt') == 'gotoartist') {
                 unfade(target);
                 var songid = getCookie('nowplaying');
@@ -1196,6 +1206,10 @@
         //    event.stopPropagation();
         //    return false;
         //};
+        function getAudioFormat() {
+            var audioformat = getCookie('audioformat');
+            document.getElementById('lblAudioFormat').innerHTML = audioformat;
+        }
         $(document).ready(function () {
             if(window.location.hostname == 'ghost.somee.com') {
                 window.oncontextmenu = function(event) {
@@ -1204,9 +1218,11 @@
                     return false;
                 };
             }
-            $(document).ready(function(){
-                $("#coverdiv").attachDragger();
-            });
+            getAudioFormat();
+
+            //$(document).ready(function(){
+            //    $("#coverdiv").attachDragger();
+            //});
             //var zip = new JSZip()
             //zip.file('hi.txt', 'Hi there')
 
@@ -1365,7 +1381,7 @@
         function unfade(element) {
             //alert(element.style.opacity);
             if(element.style.opacity == ''){
-                var op = 0.1;  // initial opacity
+                var op = 0.4;  // initial opacity
                 var timer = setInterval(function () {
                     if (op >= 1) {
                         clearInterval(timer);
@@ -1376,7 +1392,7 @@
                 }, 10);
             } else {
                 if(parseInt(element.style.opacity) >= 1) {
-                    var op = 0.1;  // initial opacity
+                    var op = 0.4;  // initial opacity
                     var timer = setInterval(function () {
                         if (op >= 1) {
                             clearInterval(timer);

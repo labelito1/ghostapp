@@ -16,8 +16,7 @@ namespace migh.application
     {
         static Library lib = null;
         User user = new User();
-        string lq = "false";
-        
+       
         #region load
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -25,11 +24,6 @@ namespace migh.application
             if (!IsPostBack)
             {
                 Session.Add("user", null);
-                if(Request.QueryString["lq"] == "true" || Request.QueryString["lq"] == "false")
-                {
-                    Session.Add("lq", Request.QueryString["lq"]);
-                }
-                
 
                 try
                 {
@@ -98,19 +92,65 @@ namespace migh.application
                 //        listArtists.Items.Add(item);
                 //    }
                 //}
-                if (Session["lq"] as string == "true")
-                {
-                    lib.configuration.AudioFileURLFormat = System.Configuration.ConfigurationManager.AppSettings["lqsourceformat"];
-                }
-                else
-                {
-                    lib.configuration.AudioFileURLFormat = Session["hqsourceformat"] as string;
-                }
+
             }
             catch (Exception ex)
             {
                 Response.Write("<script> alert('" + ex.Message + "')</script>");
             }
+
+            try
+            {
+                HttpCookie audioformat = HttpContext.Current.Request.Cookies.Get("audioformat");
+                if (audioformat.Value == string.Empty || audioformat.Value == null)
+                {
+                    if (lib.configuration.AudioFileURLFormat.Equals(System.Configuration.ConfigurationManager.AppSettings["lqsourceformat"]))
+                    {
+                        audioformat.Value = "Opus 64k VBR";
+                    }
+                    else
+                    {
+                        if (lib.configuration.AudioFileURLFormat.Equals(HttpContext.Current.Session["hqsourceformat"] as string))
+                        {
+                            audioformat.Value = "AAC 256k VBR";
+                        }
+                    }
+                    HttpContext.Current.Response.Cookies.Remove("audioformat");
+                    HttpContext.Current.Response.Cookies.Add(audioformat);
+                }
+                else
+                {
+                    if (audioformat.Value.Equals("AAC 256k VBR"))
+                    {
+                        lib.configuration.AudioFileURLFormat = HttpContext.Current.Session["hqsourceformat"] as string;
+                    }
+                    else
+                    {
+                        if (audioformat.Value.Equals("Opus 64k VBR"))
+                        {
+                            lib.configuration.AudioFileURLFormat = System.Configuration.ConfigurationManager.AppSettings["lqsourceformat"];
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                HttpCookie audioformat = new HttpCookie("audioformat");
+                if (lib.configuration.AudioFileURLFormat.Equals(System.Configuration.ConfigurationManager.AppSettings["lqsourceformat"]))
+                {
+                    audioformat.Value = "Opus 64k VBR";
+                }
+                else
+                {
+                    if (lib.configuration.AudioFileURLFormat.Equals(HttpContext.Current.Session["hqsourceformat"] as string))
+                    {
+                        audioformat.Value = "AAC 256k VBR";
+                    }
+                }
+                HttpContext.Current.Response.Cookies.Remove("audioformat");
+                HttpContext.Current.Response.Cookies.Add(audioformat);
+            }
+            
         }
         #endregion
 
@@ -248,7 +288,7 @@ namespace migh.application
         {
             HttpCookie nowplaying = new HttpCookie("nowplaying");
             nowplaying.Value = id.ToString();
-            HttpContext.Current.Response.Cookies.Clear();
+            HttpContext.Current.Response.Cookies.Remove("nowplaying");
             HttpContext.Current.Response.Cookies.Add(nowplaying);
         }
         #region canción siguiente
@@ -651,5 +691,23 @@ namespace migh.application
             return artist.id;
         }
         #endregion
+
+        [WebMethod]
+        public static void switchAudioFormat()
+        {
+            HttpCookie audioformat = new HttpCookie("audioformat");
+            if (lib.configuration.AudioFileURLFormat.Equals(System.Configuration.ConfigurationManager.AppSettings["lqsourceformat"]))
+            {
+                audioformat.Value = "AAC 256k VBR";
+                lib.configuration.AudioFileURLFormat = HttpContext.Current.Session["hqsourceformat"] as string;
+            }
+            else
+            {
+                audioformat.Value = "Opus 64k VBR";
+                lib.configuration.AudioFileURLFormat = System.Configuration.ConfigurationManager.AppSettings["lqsourceformat"];
+            }
+            HttpContext.Current.Response.Cookies.Remove("audioformat");
+            HttpContext.Current.Response.Cookies.Add(audioformat);
+        }
     }
 }
