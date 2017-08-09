@@ -628,7 +628,7 @@
 
                 img.setAttribute('type', 'albumitem');
                 img.id = i;
-                img.src = srcs[i];
+                img.src = srcs[i].toString().replace("Cover.jpg", "CoverSmall.jpg");
                 img.style.display = 'inline';
                 img.width = '95';
                 img.height = '95'; 
@@ -1397,7 +1397,7 @@
             if (response != img.src) {
                 //changeFavicon(response);
                 img.src = response;
-                imgTop.src = response;
+                imgTop.src = response.toString().replace("Cover.jpg", "CoverSmall.jpg");;
             }
         }
         function setTitle(response) {
