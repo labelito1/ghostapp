@@ -16,74 +16,24 @@ namespace migh.application
     {
         static Library lib = null;
         User user = new User();
-
+        string lq = "false";
+        
         #region load
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             if (!IsPostBack)
             {
                 Session.Add("user", null);
-                string download = Request.QueryString["download"];
-                string nowplaying = Request.QueryString["nowplaying"];
-                string session = Request.QueryString["session"];
+                if(Request.QueryString["lq"] == "true" || Request.QueryString["lq"] == "false")
+                {
+                    Session.Add("lq", Request.QueryString["lq"]);
+                }
+                
+
                 try
                 {
-                    //if (session != null)
-                    //{
-                    //    if (session.ToLower() == "end")
-                    //    {
-                    //        Session.Clear();
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    if (download != null)
-                    //    {
-                    //        if (download.ToLower() == "nowplaying")
-                    //        {
-                    //            if (Session["currentList"] != null)
-                    //            {
-                    //                List<Song> list = Session["currentList"] as List<Song>;
-                    //                int index = (int)Session["currentSongIndex"];
-                    //                Song song = list.ElementAt(index);
-                    //                Artist artist = Artist.get(lib.artist_list, song.artist_id);
-                    //                Album album = Album.get(lib.album_list, song.album_id);
-                    //                string url = string.Format(lib.configuration.AudioFileURLFormat, artist.url_name, album.url_name, Tools.ConvertToGitHubFile(song.file_name, lib.configuration.GitHubFile_TextToReplace_List));
-                    //                Response.Redirect(url);
-                    //            }
-                    //        }
-                    //        else
-                    //        {
-                    //            int SongID = Convert.ToInt32(download);
-                    //            if (Song.id_exists(lib.song_list, SongID))
-                    //            {
-                    //                Song song = lib.song_list.Single(n => n.id == SongID);
-                    //                Artist artist = Artist.get(lib.artist_list, song.artist_id);
-                    //                Album album = Album.get(lib.album_list, song.album_id);
-                    //                string url = string.Format(lib.configuration.AudioFileURLFormat, artist.url_name, album.url_name, Tools.ConvertToGitHubFile(song.file_name, lib.configuration.GitHubFile_TextToReplace_List));
-                    //                Response.Redirect(url);
-                    //            }
-                    //        }
-                    //    }
-                    //    else
-                    //    {
-                    //        if (nowplaying != null)
-                    //        {
-                    //            int SongID = Convert.ToInt32(nowplaying);
-                    //            if (Song.id_exists(lib.song_list, SongID))
-                    //            {
-                    //                Song song = lib.song_list.Single(n => n.id == SongID);
-                    //                List<Song> list = new List<Song>();
-                    //                list.Add(song);
-                    //                Session["currentList"] = list;
-                    //                Session["currentSongIndex"] = 0;
-                    //                Session["selectedSong"] = SongID;
-                    //                Page.ClientScript.RegisterStartupScript(this.GetType(), "script", "PlaySong();", true);
-                    //            }
-                    //        }
-                    //    }
-                    //}
-                    ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "text", "cleansomee()", true);
+                    //ScriptManager.RegisterStartupScript(this.Page, Page.GetType(), "text", "cleansomee()", true);
                 }
                 catch { }
             }
@@ -109,6 +59,10 @@ namespace migh.application
                     {
                         lib = new Library(su_alt, u, p);
                         user = lib.user_list.Single(us => us.name.ToLower() == username.ToLower());
+                    }
+                    if(Session["hqsourceformat"] == null)
+                    {
+                        Session.Add("hqsourceformat", lib.configuration.AudioFileURLFormat);
                     }
                     
                     Session.Add("user", user);
@@ -144,7 +98,14 @@ namespace migh.application
                 //        listArtists.Items.Add(item);
                 //    }
                 //}
-                
+                if (Session["lq"] as string == "true")
+                {
+                    lib.configuration.AudioFileURLFormat = System.Configuration.ConfigurationManager.AppSettings["lqsourceformat"];
+                }
+                else
+                {
+                    lib.configuration.AudioFileURLFormat = Session["hqsourceformat"] as string;
+                }
             }
             catch (Exception ex)
             {
@@ -354,8 +315,8 @@ namespace migh.application
             {
                 listAlbums.Items.Clear();
                 listAlbums.Items.Add("(Álbum)");
-                listSongs.Items.Clear();
-                listSongs.Items.Add("(Canción)");
+                //listSongs.Items.Clear();
+                //listSongs.Items.Add("(Canción)");
                 Artist artist = Artist.get(lib.artist_list, Convert.ToInt32(listArtists.SelectedValue));
                 IEnumerable<Album> tempList = lib.album_list.Where(a => a.artist_id == artist.id);
                 IEnumerable<Album> sortedList = tempList.OrderByDescending(o => o.year);
@@ -383,7 +344,7 @@ namespace migh.application
                         }
                     }
                     listAlbums.SelectedIndex = 0;
-                    listSongs.SelectedIndex = 0;
+                    //listSongs.SelectedIndex = 0;
                     var albumnames = Newtonsoft.Json.JsonConvert.SerializeObject(albumname.ToArray<string>());
                     var aname = Newtonsoft.Json.JsonConvert.SerializeObject(artistname);
                     var acovers = Newtonsoft.Json.JsonConvert.SerializeObject(albumimg.ToArray<string>());
@@ -462,24 +423,24 @@ namespace migh.application
             }
             else
             {
-                try
-                {
-                    Album album = Album.get(lib.album_list, Convert.ToInt32(listAlbums.SelectedValue));
-                    Artist artist = Artist.get(lib.artist_list, album.artist_id);
-                    listSongs.Items.Clear();
-                    listSongs.Items.Add("(Canción)");
-                    foreach (Song song in lib.song_list)
-                    {
-                        if (song.artist_id == artist.id)
-                        {
-                            ListItem item = new ListItem();
-                            item.Text = song.name;
-                            item.Value = song.id.ToString();
-                            listSongs.Items.Add(item);
-                        }
-                    }
-                }
-                catch { }
+                //try
+                //{
+                //    Album album = Album.get(lib.album_list, Convert.ToInt32(listAlbums.SelectedValue));
+                //    Artist artist = Artist.get(lib.artist_list, album.artist_id);
+                //    listSongs.Items.Clear();
+                //    listSongs.Items.Add("(Canción)");
+                //    foreach (Song song in lib.song_list)
+                //    {
+                //        if (song.artist_id == artist.id)
+                //        {
+                //            ListItem item = new ListItem();
+                //            item.Text = song.name;
+                //            item.Value = song.id.ToString();
+                //            listSongs.Items.Add(item);
+                //        }
+                //    }
+                //}
+                //catch { }
                 
             }
         }
