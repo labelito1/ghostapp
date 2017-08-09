@@ -432,7 +432,7 @@
         <table style="border-spacing:0px; width:100%; height:100%">
             <tr style="width:100%">
                 <td id="tdImg" style="text-align: left; width:65px">
-                    <img id="imgSongCoverTop" alt="imgSongCover" style="height:60px; display:none; width:60px; vertical-align:middle" src="images/default_album.png" />
+                    <img id="imgSongCoverTop" alt="imgSongCover" style="margin-right:5px; height:60px; display:none; width:60px; vertical-align:middle" src="images/default_album.png" />
                 </td>
                 <td id="tdTag" style="text-align:center; width:100%; vertical-align:middle; height:100%">
                     <div style="height:100%; width:100%; display:grid">
@@ -490,7 +490,7 @@
             <img alt="gotoalbum" src="images/album.png" style="width: 35px; height: 35px; vertical-align:middle; margin-right:10px"/>
             
             <img alt="gotoartist" src="images/artist.png" style="width: 35px; height: 35px; vertical-align:middle; margin-left:10px"/>
-            <div id="btnAudioFormat" style="height: 30px/*; border-style: solid; border-width: 2px; border-color: #404040;*/">
+            <div id="btnAudioFormat" style="height: 40px; border-top-style: solid; border-top-width: 2px; border-top-color: #404040;">
                 <span style="display: inline-block; height: 100%; vertical-align: middle; visibility:hidden"></span>
                 <label id="lblAudioFormat" class="dark" style="pointer-events:none"></label>
             </div>
@@ -1381,7 +1381,7 @@
         function unfade(element) {
             //alert(element.style.opacity);
             if(element.style.opacity == ''){
-                var op = 0.4;  // initial opacity
+                var op = 0.2;  // initial opacity
                 var timer = setInterval(function () {
                     if (op >= 1) {
                         clearInterval(timer);
@@ -1389,10 +1389,10 @@
                     element.style.opacity = op;
                     element.style.filter = 'alpha(opacity=' + op * 100 + ")";
                     op += op * 0.1;
-                }, 10);
+                }, 7);
             } else {
                 if(parseInt(element.style.opacity) >= 1) {
-                    var op = 0.4;  // initial opacity
+                    var op = 0.2;  // initial opacity
                     var timer = setInterval(function () {
                         if (op >= 1) {
                             clearInterval(timer);
@@ -1400,7 +1400,7 @@
                         element.style.opacity = op;
                         element.style.filter = 'alpha(opacity=' + op * 100 + ")";
                         op += op * 0.1;
-                    }, 10);
+                    }, 7);
                 }
             }
             
