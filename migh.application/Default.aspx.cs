@@ -5,10 +5,12 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using migh.api;
+using System.Drawing;
 using System.Web.Services;
 using System.Net;
 using JsonTools;
 using System.Web.Script.Serialization;
+using System.IO;
 
 namespace migh.application
 {
@@ -345,7 +347,14 @@ namespace migh.application
             return url;
         }
         #endregion
-
+        public static byte[] ImageToByte(System.Drawing.Image img)
+        {
+            using (var stream = new MemoryStream())
+            {
+                img.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                return stream.ToArray();
+            }
+        }
         #region eventos combos
         protected void listArtists_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -371,7 +380,13 @@ namespace migh.application
                     {
                         if(album.artist_id == artist.id)
                         {
-                            albumimg.Add(string.Format(lib.configuration.AlbumCoverImageFileURLFormat, Tools.ConvertToGitHubFolder(artist.name), Tools.ConvertToGitHubFolder(album.name)));
+                        
+                            string imgurl = string.Format(lib.configuration.AlbumCoverImageFileURLFormat, Tools.ConvertToGitHubFolder(artist.name), Tools.ConvertToGitHubFolder(album.name));
+                            //System.Drawing.Image img = Tools.DownloadImage(imgurl);
+                            //Bitmap bmp = Tools.ResizeImage(img, 200, 200);
+                            //byte[] bytes = ImageToByte(bmp);
+                            //string res = "data:image/jpeg;base64," + Convert.ToBase64String(bytes);
+                            albumimg.Add(imgurl);
                             albumname.Add(album.name);
                             year.Add(album.year.ToString());
                             id.Add(album.id);
