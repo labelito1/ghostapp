@@ -1,7 +1,7 @@
 ﻿<%@ Page Language="C#" MaintainScrollPositionOnPostback="true" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="migh.application.Default" %>
 
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
-
+hola xd
 <!DOCTYPE html>
 
 <html id="xd" style="background-color: #282828" xmlns="http://www.w3.org/1999/xhtml">
