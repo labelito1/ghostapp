@@ -8,6 +8,7 @@
 <head runat="server">
     <style>
         #optiondiv {
+            
             border-top-style:solid;
             border-bottom-style:solid;
             border-left-style:solid;
@@ -16,8 +17,7 @@
             border-color:#404040;
             border-radius:4px;
             height: auto;
-            right:33.33%;
-            left: 33.33%;
+            width:100%;
             color:white;
             
             position:fixed;
@@ -483,17 +483,22 @@
         </div>
     </div>
     <div id="optiondiv" class="panel panel-primary" style="display:none; text-align:center; background-color: black; background-size:contain; background-position:center top; width: 100% auto; margin: 0 auto; max-width: 100%">
-        <label class="dark">Ir a...</label>
-        <div style="height:100%; vertical-align:middle">
-            <span style="display: inline-block; height: 100%; vertical-align: middle; visibility:hidden"></span>
-            <img alt="gotoalbum" src="images/album.png" style="width: 35px; height: 35px; vertical-align:middle; margin-right:10px"/>
-            
-            <img alt="gotoartist" src="images/artist.png" style="width: 35px; height: 35px; vertical-align:middle; margin-left:10px"/>
-            <div id="btnAudioFormat" style="height: 40px; border-top-style: solid; border-top-width: 2px; border-top-color: #404040;">
-                <span style="display: inline-block; height: 100%; vertical-align: middle; visibility:hidden"></span>
-                <label id="lblAudioFormat" class="dark" style="pointer-events:none"></label>
-            </div>
-        </div>
+        
+        <table style="height:100%; width:100%">
+            <tbody>
+                <tr>
+                    <td style="width:33.3%; text-align:right">
+                        <img alt="gotoalbum" src="images/album.png" style="width: 35px; height: 35px; vertical-align:middle"/>
+                    </td>
+                    <td style="width:33.3%; text-align:center">
+                        <label id="lblAudioFormat" class="dark" style="padding:5px"></label>
+                    </td>
+                    <td style="width:33.3%; text-align:left">
+                        <img alt="gotoartist" src="images/artist.png" style="width: 35px; height: 35px; vertical-align:middle"/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div id="footer" style="background-color: black">
         <div style="height: 10px; background-color:black">
@@ -731,7 +736,7 @@
         var btnopenmenu = document.getElementById('openmenu');
         openmenu.onclick = function (event) {
             unfade(btnopenmenu);
-            $('#optiondiv').slideToggle("fast");
+            $('#optiondiv').slideToggle();
         }
 
         function gotoalbum(id) {
@@ -805,7 +810,7 @@
             var form = document.getElementById('form1');
             
             var target = getEventTarget(event);
-            if (target.id == 'btnAudioFormat') {
+            if (target.id == 'lblAudioFormat') {
                 PageMethods.switchAudioFormat(setaudioformat);
                 function setaudioformat() {
                     getAudioFormat();
