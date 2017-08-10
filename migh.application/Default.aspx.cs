@@ -19,6 +19,47 @@ namespace migh.application
         static Library lib = null;
         User user = new User();
        
+        [WebMethod]
+        public static string refreshLib()
+        {
+            string artists = "";
+            User user = new User();
+            string su = "ftp://ftp.drivehq.com/migh.lib";
+            string su_alt = System.Configuration.ConfigurationManager.AppSettings["libsource"];
+            string u = "505darksoft2";
+            string p = "poder123";
+
+            lib = new Library(su, u, p);
+
+            try
+            {
+                lib = new Library(su_alt, u, p);
+                strArtist def = new strArtist();
+                def.name = "(Artista)";
+
+                List<strArtist> list = new List<strArtist>();
+                list.Add(def);
+
+                List<Artist> SortedList = lib.artist_list.OrderBy(o => o.name).ToList();
+                foreach (Artist art in SortedList)
+                {
+                    strArtist item = new strArtist();
+                    item.name = art.name;
+                    item.id = art.id;
+                    if (!list.Contains(item))
+                    {
+                        list.Add(item);
+                    }
+                }
+                artists = Newtonsoft.Json.JsonConvert.SerializeObject(list.ToArray<strArtist>());
+                return artists;
+            }
+            catch
+            {
+                return artists;
+            }
+            return artists;
+        }
         #region load
         protected void Page_Load(object sender, EventArgs e)
         {

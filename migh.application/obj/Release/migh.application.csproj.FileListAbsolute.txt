@@ -35,7 +35,6 @@ C:\Users\Dark\Documents\migh\migh.application\migh.application\bin\Newtonsoft.Js
 C:\Users\Dark\Documents\migh\migh.application\migh.application\obj\Release\migh.application.csprojResolveAssemblyReference.cache
 C:\Users\Dark\Documents\migh\migh.application\migh.application\obj\Release\migh.application.dll
 C:\Users\Dark\Documents\migh\migh.application\migh.application\obj\Release\migh.application.pdb
-C:\GitHub\ghostapp\migh.application\bin\migh.application.dll.config
 C:\GitHub\ghostapp\migh.application\bin\migh.application.dll
 C:\GitHub\ghostapp\migh.application\bin\migh.application.pdb
 C:\GitHub\ghostapp\migh.application\bin\AjaxControlToolkit.dll

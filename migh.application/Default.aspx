@@ -14,7 +14,6 @@
             border-right-style:solid;
             border-width:2px;
             border-color:#404040;
-            
             border-radius:4px;
             height: auto;
             right:33.33%;
@@ -509,7 +508,10 @@
             <label id="duration"  style="font-family: verdana; font-size: 9px; color: #FBFBFB">00:00</label>
         </div>
         <div>
-            <audio id="audio" autoplay="autoplay"></audio>  
+            <audio id="audio" autoplay="autoplay">
+                <source id="audiosource" type="audio/mp4" />
+                </audio>
+            <%--<audio id="audio" autoplay="autoplay"></audio>--%>  
         </div>
         <div style="text-align: center; height: 100%; margin-top:8px">
             <img id="shuffle" src="images/shuffle.png" style="width: 21px; height: 21px; margin-bottom: 14px; margin-right:20px"/>
@@ -620,7 +622,7 @@
                 label.style.fontSize = '8px';
                 label.innerHTML = albumnames[i];
                 label.style.paddingBottom = '3px';
-                year.className = 'searchtext dark';
+                year.className = 'searchtext';
                 year.style.width = '120px';
                 year.style.fontSize = '8px';
                 year.style.paddingTop = '3px';
@@ -770,6 +772,27 @@
             }
             unfade(mute);
         };
+        var imgcover = document.getElementById('imgSongCover');
+        imgcover.ondblclick = function (event) {
+            //window.scrollTo(0, 0);
+            PageMethods.refreshLib(refresh);
+            function refresh(response) {
+                var list = JSON.parse(response);
+                var drop = document.getElementsByName('listArtists');
+                $(drop).empty();
+                
+                for(i = 0; i < list.length; i++) {
+                    var option = document.createElement('option');
+                    if(i == 0){
+                        option.setAttribute('selected', 'selected');
+                    }
+                    option.setAttribute('value', list[i].id);
+                    option.innerHTML = list[i].name;
+                
+                    $(drop).append(option);
+                }
+            }
+        };
         var tdTag = document.getElementById('tdTag');
         tdTag.ondblclick = function (event) {
             //window.scrollTo(0, 0);
@@ -875,7 +898,10 @@
                 PageMethods.GetTrack(target.id, play);
                 function play (response) {
                     var track = JSON.parse(response);
-                    document.getElementById('audio').src = track.url;
+                    var audioSource = $('source#audiosource');
+                    audioSource.attr('src', track.url);
+                    audio.load();
+                    audio.play()
                     setTitle(track.name);
                     setAlbum(track.album);
                     setArtist(track.JoinedPerformers);
@@ -1116,6 +1142,7 @@
                 li.style.whiteSpace = 'nowrap';
                 //li.style.width = '90%';
                 var label = document.createElement('label');
+                
                 label.style.display = 'inline-block';
                 label.style.maxWidth = '70%';
                 label.style.whiteSpace = 'normal';
@@ -1297,7 +1324,9 @@
                 PageMethods.getCurrentSongTitle(setTitle);
                 PageMethods.getCurrentSongArtist(setArtist);
                 PageMethods.getCurrentSongAlbum(setAlbum);
-                audio.src = response;
+                var audioSource = $('source#audiosource');
+                audioSource.attr('src', response);
+                audio.load();
                 audio.play()
                 .then(_ => updatemetadata());
             }
@@ -1455,7 +1484,9 @@
         });
         $('#play').on('click', function () {
             var btn = document.getElementById('play');
-            if (document.getElementById('audio').src != '')
+            var audioSource = $('source#audiosource');
+            
+            if (audiosource.getAttribute('src') != '')
             {
                 unfade(btn);
                 if (audio.paused) {
