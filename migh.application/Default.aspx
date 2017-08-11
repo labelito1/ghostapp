@@ -523,7 +523,7 @@
             <img id="mute" src="images/unmute.png" style="width: 21px; height: 21px; margin-bottom: 14px; margin-right:20px"/>
             <img id="previous" src="images/previous.png" style="width: 22px; height: 22px; margin-bottom: 14px; margin-right: 10px"/>
             <img id="play" src="images/play.png" style="width: 50px; height: 50px; margin-top:-6px"/>
-            <img id="next" src="images/next.png" style="width: 22px; height: 22px; margin-bottom: 13px; margin-left: 10px"/>
+            <img id="next" src="images/next.png" style="width: 22px; height: 22px; margin-bottom: 14px; margin-left: 10px"/>
             <img id="openmenu" src="images/menu.png" style="width: 21px; height: 21px; margin-bottom: 14px; margin-left:20px"/>
             <img id="btnOpenSearch" src="images/search.png" style="width: 21px; height: 21px; margin-bottom: 14px; margin-left:20px"/>
             <%--<div id="btnOpenSearch" style="height:35px; width:35px; float: right; display: inline-block; position: absolute; right:1px; margin-top:20px">
