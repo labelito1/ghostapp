@@ -246,7 +246,7 @@ namespace migh.application
                     Song song = songs.ElementAt(index);
                     Artist artist = Artist.get(lib.artist_list, song.artist_id);
                     Album album = Album.get(lib.album_list, song.album_id);
-                    res = string.Format(lib.configuration.AudioFileURLFormat, Tools.ConvertToGitHubFolder(artist.name), Tools.ConvertToGitHubFolder(album.name), Song.getFileFormat(song).Replace(".gaf", ".mp3"));
+                    res = string.Format(lib.configuration.AudioFileURLFormat, Tools.ConvertToGitHubFolder(artist.name), Tools.ConvertToGitHubFolder(album.name), Song.getFileFormat(song));
                 }
             }
             return res;
@@ -268,7 +268,7 @@ namespace migh.application
                     {
                         Album album = Album.get(lib.album_list, song.album_id);
                         Artist artist = Artist.get(lib.artist_list, song.artist_id);
-                        url = string.Format(lib.configuration.AudioFileURLFormat, Tools.ConvertToGitHubFolder(artist.name), Tools.ConvertToGitHubFolder(album.name), Song.getFileFormat(song).Replace(".gaf", ".mp3"));
+                        url = string.Format(lib.configuration.AudioFileURLFormat, Tools.ConvertToGitHubFolder(artist.name), Tools.ConvertToGitHubFolder(album.name), Song.getFileFormat(song));
                         return url;
                     }
                 }
@@ -399,7 +399,7 @@ namespace migh.application
                         Song nextSong = songs.ElementAt(index + 1);
                         Artist artist = Artist.get(lib.artist_list, nextSong.artist_id);
                         Album album = Album.get(lib.album_list, nextSong.album_id);
-                        url = string.Format(lib.configuration.AudioFileURLFormat, Tools.ConvertToGitHubFolder(artist.name), Tools.ConvertToGitHubFolder(album.name), Song.getFileFormat(nextSong).Replace(".gaf", ".mp3"));
+                        url = string.Format(lib.configuration.AudioFileURLFormat, Tools.ConvertToGitHubFolder(artist.name), Tools.ConvertToGitHubFolder(album.name), Song.getFileFormat(nextSong));
                         setNowplaying(nextSong.id);
                         return url;
                     }
@@ -426,7 +426,7 @@ namespace migh.application
                         Song previousSong = songs.ElementAt(index - 1);
                         Artist artist = Artist.get(lib.artist_list, previousSong.artist_id);
                         Album album = Album.get(lib.album_list, previousSong.album_id);
-                        url = string.Format(lib.configuration.AudioFileURLFormat, Tools.ConvertToGitHubFolder(artist.name), Tools.ConvertToGitHubFolder(album.name), Song.getFileFormat(previousSong).Replace(".gaf", ".mp3"));
+                        url = string.Format(lib.configuration.AudioFileURLFormat, Tools.ConvertToGitHubFolder(artist.name), Tools.ConvertToGitHubFolder(album.name), Song.getFileFormat(previousSong));
                         setNowplaying(previousSong.id);
                         return url;
                     }
@@ -724,7 +724,7 @@ namespace migh.application
             Song song = lib.song_list.First(s => s.id == Convert.ToInt32(id));
             Artist artist = Artist.get(lib.artist_list, song.artist_id);
             Album album = Album.get(lib.album_list, song.album_id);
-            string url = string.Format(lib.configuration.AudioFileURLFormat, Tools.ConvertToGitHubFolder(artist.name), Tools.ConvertToGitHubFolder(album.name), Song.getFileFormat(song).Replace(".gaf", ".mp3"));
+            string url = string.Format(lib.configuration.AudioFileURLFormat, Tools.ConvertToGitHubFolder(artist.name), Tools.ConvertToGitHubFolder(album.name), Song.getFileFormat(song));
             string cover = string.Format(lib.configuration.AlbumCoverImageFileURLFormat, Tools.ConvertToGitHubFolder(artist.name), Tools.ConvertToGitHubFolder(album.name));
             str.JoinedPerformers = song.JoinedPerformers.Replace(';', ',');
 
