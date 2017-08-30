@@ -184,7 +184,7 @@ namespace migh.application
                 {
                     if (lib.configuration.AudioFileURLFormat.Equals(System.Configuration.ConfigurationManager.AppSettings["lqsourceformat"]))
                     {
-                        audioformat.Value = "Opus 64k VBR";
+                        audioformat.Value = "Opus 96k VBR";
                     }
                     else
                     {
@@ -204,7 +204,7 @@ namespace migh.application
                     }
                     else
                     {
-                        if (audioformat.Value.Equals("Opus 64k VBR"))
+                        if (audioformat.Value.Equals("Opus 96k VBR"))
                         {
                             lib.configuration.AudioFileURLFormat = System.Configuration.ConfigurationManager.AppSettings["lqsourceformat"];
                         }
@@ -216,7 +216,7 @@ namespace migh.application
                 HttpCookie audioformat = new HttpCookie("audioformat");
                 if (lib.configuration.AudioFileURLFormat.Equals(System.Configuration.ConfigurationManager.AppSettings["lqsourceformat"]))
                 {
-                    audioformat.Value = "Opus 64k VBR";
+                    audioformat.Value = "Opus 96k VBR";
                 }
                 else
                 {
@@ -809,7 +809,7 @@ namespace migh.application
             }
             else
             {
-                audioformat.Value = "Opus 64k VBR";
+                audioformat.Value = "Opus 96k VBR";
                 lib.configuration.AudioFileURLFormat = System.Configuration.ConfigurationManager.AppSettings["lqsourceformat"];
             }
             HttpContext.Current.Response.Cookies.Remove("audioformat");
