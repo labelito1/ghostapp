@@ -25,10 +25,10 @@
                 <tr id="xddd" style="width:100%">
                     <td style="text-align: center; width:50%">
                         <div id="imgartistdiv">
-                            <img id="imgArtist" alt="imgArtist" src="images/artist.png" />
+                            <img id="imgArtist" alt="imgArtist" src="images/artist.png" style="box-shadow:0px 0px 20px 0px rgba(0, 0, 0, 0.6)" />
                         </div>
-                        <div style="margin-bottom:10px">
-                            <label id="lblArtist">Artista</label>
+                        <div style="margin-bottom:5px; margin-top:5px">
+                            <label id="lblArtist" style="padding:6px; font-size:10px; border-radius:50px">Artista</label>
                         </div>
                     </td>
                 </tr>
@@ -48,8 +48,8 @@
                 </ContentTemplate>
             </asp:UpdatePanel>
             <div id="coverdiv" class="panel panel-primary" style="display:none; text-align:center; background-size:contain; background-position:center top; width: 100% auto; margin: 0 auto; max-width: 600px">
-                <table id="tableImg" style="text-align: center; width:100%">
-                    <tr style="background-color: #1c2027; -moz-border-radius: 10px; -webkit-border-radius: 10px;border-radius: 10px;">
+                <table id="tableImg" style="text-align: center; width:100%; background-color:#16191f; border-spacing:0">
+                    <tr style="background-color: #1c2027; -moz-border-radius: 10px; -webkit-border-radius: 10px;border-radius: 10px; background-color:#16191f">
                         <td>
                             <ul id="albumlist" class="images" style="background-size:contain; background-position:center top; width: 100% auto; margin: 0 auto; max-width: 600px">
                             </ul>
@@ -93,7 +93,7 @@
             <div id="txtCurrentAlbum" class="panel panel-primary" style="text-align:center; background-color: #16191f; background-size:contain; background-position:center top; width: 100% auto; margin: 0 auto; max-width: 800px; overflow:hidden">
             </div>
             <div id="tracksdiv" class="panel panel-primary" style="background-color: #16191f; background-size:contain; background-position:center top; width: 100% auto; margin: 0 auto; max-width: 800px">
-                <table style="width:100%;">
+                <table style="width:100%; border-spacing:0">
                     <tr>
                         <td style="text-align:left">
                             <ol id="tracklist" class="no-zoom">
@@ -421,7 +421,7 @@
 
             var margin_bot = body_height - offset;
             $('#artistdiv').css('bottom', margin_bot + 'px');
-            $('#optiondiv').css('bottom', margin_bot + 'px');
+            $('#optiondiv').css('bottom', (margin_bot - 1) + 'px');
         }
         function adjustSize() {
             var width = document.getElementById('maindiv').offsetWidth;
@@ -495,11 +495,13 @@
                 var label = document.createElement('label');
                 var year = document.createElement('label');
                 label.className = 'searchtext';
-                label.style.width = '100px';
+                //label.style.fontWeight = "bold";
+                label.style.width = '120px';
                 label.style.fontSize = '8px';
                 label.innerHTML = albumnames[i];
                 label.style.paddingBottom = '3px';
                 year.className = 'searchtext';
+                //year.style.fontWeight = "bold";
                 year.style.width = '100px';
                 year.style.fontSize = '8px';
                 year.style.paddingTop = '3px';
@@ -514,9 +516,9 @@
                 img.id = i;
                 img.src = srcs[i].toString().replace("Cover.jpg", "CoverSmall.jpg");
                 img.style.display = 'inline';
-                img.width = '90';
-                img.height = '90'; 
-                
+                img.width = '100';
+                img.height = '100'; 
+                img.style.boxShadow = "0px 0px 20px 0px rgba(0, 0, 0, 0.6)";
                 li.appendChild(a);
                 a.appendChild(label);
                 a.appendChild(img);
@@ -739,7 +741,7 @@
                 if(top == 0) {
                     speed = 0;
                 }
-                $(form).animate({ scrollTop: 0 }, speed, function () {
+                //$(form).animate({ scrollTop: 0 }, speed, function () {
                     var songid = getCookie('nowplaying');
                     PageMethods.getArtistBySongId(parseInt(songid), set1);
                     function set1(response){
@@ -765,7 +767,7 @@
                         }
                     }
                     checkSelectedArtist();
-                });
+                //});
             }
             if (target.getAttribute('alt') == 'gotoalbum') {
                 selectedAlbum = parseInt(getCookie('nowplaying_album'));
@@ -776,7 +778,7 @@
                 }
                 unfade(target);
                 //$('#optiondiv').slideToggle("fast", function () {
-                $(form).animate({ scrollTop: top }, 300, function () {
+                //$(form).animate({ scrollTop: top }, 300, function () {
                     var songid = getCookie('nowplaying');
                     PageMethods.getArtistBySongId(songid, set2);
                     function set2(response) {
@@ -805,7 +807,7 @@
                     }
                     checkSelectedAlbum();
                     checkSelectedArtist();
-                });
+                //});
             }
         }
         
@@ -881,7 +883,7 @@
                         if(document.getElementById('imgartistdiv').style.display.toString() !== 'none'){
                             top = 328;
                         }
-                        $(form).animate({ scrollTop: top }, 300, function () {
+                        //$(form).animate({ scrollTop: top }, 300, function () {
                             var album_id = target.id;
                             selectedAlbum = parseInt(target.id);
                             PageMethods.getArtistByAlbumId(album_id, set);
@@ -906,7 +908,7 @@
                                     }
                                 }
                             }
-                        });
+                        //});
                         
                     });
                     checkSelectedAlbum();
@@ -928,7 +930,7 @@
                         if(top == 0) {
                             speed = 0;
                         }
-                        $(form).animate({ scrollTop: 0 }, speed, function () {
+                        //$(form).animate({ scrollTop: 0 }, speed, function () {
                             var id = target.id;
                             var listArtists = document.getElementById('listArtists');
 
@@ -946,7 +948,7 @@
                                     break;
                                 }
                             }
-                        });
+                        //});
                     });
                     checkSelectedArtist();
                 });
@@ -1094,7 +1096,7 @@
                 if(top == 0) {
                     speed = 0;
                 }
-                $('#form1').animate({ scrollTop: 0 }, speed, function(){
+                //$('#form1').animate({ scrollTop: 0 }, speed, function(){
                     var target = getEventTarget(event);
                     var name = target.getAttribute('alt').split('@')[0];
                     var image = target.getAttribute('alt').split('@')[1];
@@ -1104,7 +1106,7 @@
                     document.getElementById('imgArtist').src = image;
                     document.getElementById('listArtists').selectedIndex = id + 1;
                     __doPostBack('<%= listAlbums.UniqueID %>', '');
-                });
+                //});
                 checkSelectedArtist();
             }
         };
@@ -1313,7 +1315,7 @@
                     img.setAttribute('type', 'artist');
                     img.alt = list[i].name + "@" + list[i].image + "@" + list[i].id;
                     //img.style.paddingBottom = '2px';
-
+                    img.style.boxShadow = '0px 0px 20px 0px rgba(0, 0, 0, 0.6)';
                     var year = document.createElement('label');
 
                     year.className = 'searchtext';

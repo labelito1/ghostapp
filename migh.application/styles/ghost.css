@@ -1,7 +1,4 @@
-﻿#dblclick {
-
-}
-#tracklist {
+﻿#tracklist {
     margin-bottom: 200px;
 }
 #footer div div{
@@ -71,13 +68,14 @@
     height: 100%;
 }
 #lblArtist {
-    padding: 4px;
+    padding: 6px;
     font-family: Verdana, Geneva, 'DejaVu Sans', sans-serif;
-    font-size: 8px;
+    font-size: 10px;
+    font-weight:bold;
     color: #FBFBFB;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
-    border-radius: 4px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
     background-color: #242a33;
 }
 #imgartistdiv {
