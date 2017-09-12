@@ -516,10 +516,8 @@
                 img.id = i;
                 img.src = srcs[i].toString().replace("Cover.jpg", "CoverSmall.jpg");
                 img.style.display = 'inline';
-                img.width = '100';
-                img.height = '100';
-                img.style.transition = "200ms linear";
-                img.style.boxShadow = "0px 0px 20px 0px rgba(0, 0, 0, 0.6)";
+                img.width = '90';
+                img.height = '90';
                 li.appendChild(a);
                 a.appendChild(label);
                 a.appendChild(img);
@@ -1020,11 +1018,11 @@
             for (i = 0; i < items.length; i++) {
                 var itemid = parseInt(items[i].getAttribute('alt').split('@')[2]);
                 if (itemid == selectedAlbum) {
-                    //items[i].style.borderColor = '#006ACD';
-                    items[i].style.boxShadow = 'rgba(0, 106, 205, 0.31) 0px 0px 20px 0px';
+                    items[i].style.borderColor = '#006ACD';
+                    //items[i].style.boxShadow = 'rgba(0, 106, 205, 0.31) 0px 0px 20px 0px';
                 } else {
-                    //items[i].style.borderColor = '#242a33';
-                    items[i].style.boxShadow = 'rgba(0, 0, 0, 0.6) 0px 0px 20px 0px';
+                    items[i].style.borderColor = '#242a33';
+                    //items[i].style.boxShadow = 'rgba(0, 0, 0, 0.6) 0px 0px 20px 0px';
                 }
             }
         }
@@ -1035,11 +1033,11 @@
             for (i = 0; i < items.length; i++) {
                 var itemid = parseInt(items[i].getAttribute('alt').split('@')[2]);
                 if (itemid == selectedArtist) {
-                    //items[i].style.borderColor = '#006ACD';
-                    items[i].style.boxShadow = 'rgba(0, 106, 205, 0.31) 0px 0px 20px 0px';
+                    items[i].style.borderColor = '#006ACD';
+                    //items[i].style.boxShadow = 'rgba(0, 106, 205, 0.31) 0px 0px 20px 0px';
                 } else {
-                    //items[i].style.borderColor = '#373f4c';
-                    items[i].style.boxShadow = 'rgba(0, 0, 0, 0.6) 0px 0px 20px 0px';
+                    items[i].style.borderColor = '#373f4c';
+                    //items[i].style.boxShadow = 'rgba(0, 0, 0, 0.6) 0px 0px 20px 0px';
                 }
             }
         }
@@ -1320,9 +1318,7 @@
                     img.setAttribute('type', 'artist');
                     img.alt = list[i].name + "@" + list[i].image + "@" + list[i].id;
                     //img.style.paddingBottom = '2px';
-                    img.style.boxShadow = '0px 0px 20px 0px rgba(0, 0, 0, 0.6)';
                     var year = document.createElement('label');
-                    img.style.transition = "200ms linear";
                     year.className = 'searchtext';
                     year.style.width = '85px';
                     year.style.fontSize = '8px';
