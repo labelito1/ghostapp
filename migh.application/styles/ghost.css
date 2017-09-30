@@ -31,12 +31,12 @@
     -webkit-transition: top 200ms linear;
     transition: top 200ms linear;
     border-spacing: 0px;
-    background-color: rgba(0, 45, 67, 0.90);
+    background-color: rgba(0, 37, 55, 0.9);
     position: fixed;
     left: 0;
     width: 100%;
     /*border-bottom-style: solid; 
-    border-bottom-color: #006ACD; 
+    border-bottom-color: #004463; 
     border-width: 3px;*/
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -192,7 +192,7 @@ label.searchtext {
 
 #resultdiv {
     border-bottom-style: solid;
-    border-bottom-color: #006ACD;
+    border-bottom-color: #004463;
     border-bottom-width: 3px;
     max-height: 400px;
     position: fixed;
@@ -331,7 +331,7 @@ progress[value]::-webkit-progress-value {
     -webkit-border-radius: 3px;
     margin-top:2px;
     border-radius: 3px;
-    background-color: #006ACD;
+    background-color: #004463;
     height: 3px;
 }
 
@@ -346,7 +346,7 @@ progress[value]::-moz-progress-value {
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
-    background-color: #006ACD;
+    background-color: #004463;
     height: 3px;
 }
 
@@ -435,7 +435,7 @@ label.dark {
 #footerbar {
     height: 20px;
     pointer-events:none;
-    background-color: #242a33;
+    background-color: #000000;
     position: fixed;
     left: 0;
     bottom: 65px;
@@ -443,7 +443,7 @@ label.dark {
     z-index: 1;
 }
 #footer {
-    background-color: #242a33;
+    background-color: #000000;
     position: fixed;
     left: 0;
     bottom: 0;
@@ -464,7 +464,7 @@ label {
 }
 ul.imagesArtist {
     overflow-x: auto;
-    background-color: #242a33;
+    background-color: #000000;
     margin: auto;
     padding: 5px;
     white-space: nowrap;

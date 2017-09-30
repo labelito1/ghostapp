@@ -25,7 +25,7 @@
                 <tr id="xddd" style="width:100%">
                     <td style="text-align: center; width:50%">
                         <div id="imgartistdiv">
-                            <img id="imgArtist" alt="imgArtist" src="images/artist.png" style="box-shadow:0px 0px 20px 0px rgba(0, 0, 0, 0.6)" />
+                            <img id="imgArtist" alt="imgArtist" src="images/artist.png" style="box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.6)" />
                         </div>
                         <div style="margin-bottom:5px; margin-top:5px">
                             <label id="lblArtist" style="padding:6px; font-size:10px; border-radius:50px">Artista</label>
@@ -51,7 +51,7 @@
                 <table id="tableImg" style="text-align: center; width:100%; border-spacing:0">
                     <tr style="-moz-border-radius: 10px; -webkit-border-radius: 10px;border-radius: 10px">
                         <td>
-                            <ul id="albumlist" class="images" style="overflow-x:hidden; background-size:contain; background-position:center top; width: 100% auto; margin: 0 auto; max-width: 600px">
+                            <ul id="albumlist" class="images" style="background-size:contain; background-position:center top; width: 100% auto; margin: 0 auto; max-width: 600px">
                             </ul>
                         </td>
                     </tr>
@@ -186,7 +186,7 @@
     </div>
     <div id="footer">
         <div id="footerbar">
-            <div style="background-color:#242a33; margin-left:2px; margin-right:2px;">
+            <div style="margin-left:2px; margin-right:2px;">
                 <progress id="seekbar" value="0" max="1"></progress>
             </div>
         </div>
@@ -1017,7 +1017,7 @@
             for (i = 0; i < items.length; i++) {
                 var itemid = parseInt(items[i].getAttribute('alt').split('@')[2]);
                 if (itemid == selectedAlbum) {
-                    items[i].style.borderColor = '#006ACD';
+                    items[i].style.borderColor = '#004463';
                     //items[i].style.boxShadow = 'rgba(0, 106, 205, 0.31) 0px 0px 20px 0px';
                 } else {
                     items[i].style.borderColor = '#242a33';
@@ -1032,7 +1032,7 @@
             for (i = 0; i < items.length; i++) {
                 var itemid = parseInt(items[i].getAttribute('alt').split('@')[2]);
                 if (itemid == selectedArtist) {
-                    items[i].style.borderColor = '#006ACD';
+                    items[i].style.borderColor = '#004463';
                     //items[i].style.boxShadow = 'rgba(0, 106, 205, 0.31) 0px 0px 20px 0px';
                 } else {
                     items[i].style.borderColor = '#373f4c';
@@ -1127,7 +1127,7 @@
             for(i = 0; i < items.length; i++) {
                 var itemid = parseInt(items[i].getAttribute('alt'));
                 if(itemid == parseInt(songid)) {
-                    items[i].style.borderColor = '#006ACD';
+                    items[i].style.borderColor = '#004463';
                     //items[i].style.backgroundColor = '#2c323c';
                 } else {
                     //items[i].style.backgroundColor = '#1c2027';
