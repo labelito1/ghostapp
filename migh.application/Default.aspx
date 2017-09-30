@@ -17,11 +17,11 @@
 <meta http-equiv="Content-Type" name="viewport" content="initial-scale=1, user-scalable=no"/>
     <title>ghost</title>
 </head>
-<body id="parentdiv" class="noselect" style="width: auto; background-color: #121212; background-repeat:repeat; background-attachment:fixed; background-size: 400px 400px">
-    <form id="form1" runat="server" style="background-color:#16191f">
+<body id="parentdiv" class="noselect" style="width: auto; background-repeat:repeat; background-attachment:fixed; background-size: 400px 400px">
+    <form id="form1" runat="server">
         <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true"></asp:ScriptManager>
-        <div id="maindiv" class="panel panel-primary" style="background-color: #242a33; background-size:contain; background-position:center top; width: 100% auto; margin: 0 auto; max-width: 800px; margin-top:64px">
-            <table id="coverTab" style="text-align:center; width:100%; background-color:#16191f">
+        <div id="maindiv" class="panel panel-primary" style="background-size:contain; background-position:center top; width: 100% auto; margin: 0 auto; max-width: 800px; margin-top:64px">
+            <table id="coverTab" style="text-align:center; width:100%">
                 <tr id="xddd" style="width:100%">
                     <td style="text-align: center; width:50%">
                         <div id="imgartistdiv">
@@ -48,10 +48,10 @@
                 </ContentTemplate>
             </asp:UpdatePanel>
             <div id="coverdiv" class="panel panel-primary" style="display:none; text-align:center; background-size:contain; background-position:center top; width: 100% auto; margin: 0 auto; max-width: 600px">
-                <table id="tableImg" style="text-align: center; width:100%; background-color:#16191f; border-spacing:0">
-                    <tr style="background-color: #1c2027; -moz-border-radius: 10px; -webkit-border-radius: 10px;border-radius: 10px; background-color:#16191f">
+                <table id="tableImg" style="text-align: center; width:100%; border-spacing:0">
+                    <tr style="-moz-border-radius: 10px; -webkit-border-radius: 10px;border-radius: 10px">
                         <td>
-                            <ul id="albumlist" class="images" style="background-size:contain; background-position:center top; width: 100% auto; margin: 0 auto; max-width: 600px">
+                            <ul id="albumlist" class="images" style="overflow-x:hidden; background-size:contain; background-position:center top; width: 100% auto; margin: 0 auto; max-width: 600px">
                             </ul>
                         </td>
                     </tr>
@@ -89,10 +89,10 @@
                 </ContentTemplate>
             </asp:UpdatePanel>
         </div>
-        <div id="parentTrackDiv" class="panel panel-primary" style="background-color:#16191f; background-size:contain; background-position:center top; width: 100% auto; margin: 0 auto; max-width: 800px">
-            <div id="txtCurrentAlbum" class="panel panel-primary" style="text-align:center; background-color: #16191f; background-size:contain; background-position:center top; width: 100% auto; margin: 0 auto; max-width: 800px; overflow:hidden">
+        <div id="parentTrackDiv" class="panel panel-primary" style="background-size:contain; background-position:center top; width: 100% auto; margin: 0 auto; max-width: 800px">
+            <div id="txtCurrentAlbum" class="panel panel-primary" style="text-align:center; background-size:contain; background-position:center top; width: 100% auto; margin: 0 auto; max-width: 800px; overflow:hidden">
             </div>
-            <div id="tracksdiv" class="panel panel-primary" style="background-color: #16191f; background-size:contain; background-position:center top; width: 100% auto; margin: 0 auto; max-width: 800px">
+            <div id="tracksdiv" class="panel panel-primary" style="background-size:contain; background-position:center top; width: 100% auto; margin: 0 auto; max-width: 800px">
                 <table style="width:100%; border-spacing:0">
                     <tr>
                         <td style="text-align:left">
@@ -497,13 +497,13 @@
                 label.className = 'searchtext';
                 //label.style.fontWeight = "bold";
                 label.style.width = '120px';
-                label.style.fontSize = '8px';
+                label.style.fontSize = '10px';
                 label.innerHTML = albumnames[i];
                 label.style.paddingBottom = '3px';
                 year.className = 'searchtext';
                 //year.style.fontWeight = "bold";
                 year.style.width = '100px';
-                year.style.fontSize = '8px';
+                year.style.fontSize = '9px';
                 year.style.paddingTop = '3px';
                 year.innerHTML = yearlist[i];
                 //year.style.paddingTop = '3px';
@@ -516,8 +516,8 @@
                 img.id = i;
                 img.src = srcs[i].toString().replace("Cover.jpg", "CoverSmall.jpg");
                 img.style.display = 'inline';
-                img.width = '90';
-                img.height = '90';
+                img.width = '95';
+                img.height = '95';
                 li.appendChild(a);
                 a.appendChild(label);
                 a.appendChild(img);
@@ -1128,9 +1128,9 @@
                 var itemid = parseInt(items[i].getAttribute('alt'));
                 if(itemid == parseInt(songid)) {
                     items[i].style.borderColor = '#006ACD';
-                    items[i].style.backgroundColor = '#2c323c';
+                    //items[i].style.backgroundColor = '#2c323c';
                 } else {
-                    items[i].style.backgroundColor = '#1c2027';
+                    //items[i].style.backgroundColor = '#1c2027';
                     items[i].style.borderColor = '#2c323c';
                 }
             }
@@ -1186,7 +1186,7 @@
                 var label = document.createElement('label');
                 
                 label.style.display = 'inline-block';
-                label.style.maxWidth = '70%';
+                label.style.maxWidth = '80%';
                 label.style.whiteSpace = 'normal';
                 label.setAttribute('type', 'imgplay');
                 label.id = i;
@@ -1319,8 +1319,8 @@
                     //img.style.paddingBottom = '2px';
                     var year = document.createElement('label');
                     year.className = 'searchtext';
-                    year.style.width = '85px';
-                    year.style.fontSize = '8px';
+                    year.style.width = '100px';
+                    year.style.fontSize = '9px';
                     year.style.paddingTop = '3px';
                     year.innerHTML = list[i].name;
                     //year.style.paddingTop = '3px';
