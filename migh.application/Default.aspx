@@ -124,15 +124,15 @@
                 </tr>
             </table>
         </div>
-        <div id="resultdiv" class="panel panel-primary" style="display:none; text-align:left; background-color: #242a33; background-size:contain; background-position:center top; width: 100% auto; margin: 0 auto; max-width: 100%; max-height: 300px; overflow-y: auto">
+        <div id="resultdiv" class="panel panel-primary" style="display:none; text-align:left; background-color: #000000; background-size:contain; background-position:center top; width: 100% auto; margin: 0 auto; max-width: 100%; max-height: 300px; overflow-y: auto">
             <div style="width:auto">
                <ul id="searchlist" style="list-style-type: none">
                 </ul>
            </div>
         </div>
         <div id="searchdiv" class="panel panel-primary" style="display:none; text-align:left; background-color: #242a33; background-size:contain; background-position:center top; margin: 0 auto; max-width: 100%; max-height: 400px; overflow-y: auto">
-            <div id="tdSearch" style="display:none; height: 100%" >
-                <table style="background-color: #242a33; width: 100%; height: 100%">
+            <div id="tdSearch" style="display:none; height: 100%; background-color: #000000" >
+                <table style="width: 100%; height: 100%">
                 <tr style="height:40%"></tr>
                 <tr style="height: 60%">
                     
