@@ -2,6 +2,7 @@
 var audiosource = document.createElement('source');
 
 $(document).ready(function () {
+    
     adjustSize();
     if (window.location.hostname == 'ghost.somee.com') {
         window.oncontextmenu = function (event) {
@@ -15,8 +16,10 @@ $(document).ready(function () {
     getAudioFormat();
     fillArtists();
     adjustMisc();
+    preLoadCovers();
     audio.appendChild(audiosource);
     audio.addEventListener("ended", TriggerNextSong)
+    
     $('a').each(function () {
         $(this).data('href', $(this).attr('href')).hide();
     });
@@ -39,4 +42,6 @@ $(document).ready(function () {
         } else {
         }
     }
+    
+   
 });

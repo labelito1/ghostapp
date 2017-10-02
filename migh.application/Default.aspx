@@ -14,6 +14,15 @@
     <script src="scripts/ghost.js"></script>
     <%--<link rel="shortcut icon" type="image/png" href="images/music-player.png" />--%>
     <%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>--%>
+    <style>
+        ::-webkit-scrollbar {
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 4px;
+            width: 0px;
+            height: 0px;
+        }
+    </style>
 <meta http-equiv="Content-Type" name="viewport" content="initial-scale=1, user-scalable=no"/>
     <title>ghost</title>
 </head>
@@ -173,7 +182,12 @@
         <div id="artistdiv">
             <ul id="artistlist" class="imagesArtist">            
             </ul>
+            
         </div>
+        <ul id="artistlist_temp" class="imagesArtist" style="display:none">            
+        </ul>
+        <ul id="albumlist_temp" class="imagesArtist" style="display:none">            
+        </ul>
         <asp:HiddenField ID="nowplaying" runat="server" />
     </form>
     <div >
@@ -348,36 +362,36 @@
             }
         };
         //hide topbar
-        //var didScroll;
-        //var lastScrollTop = 0;
-        //var delta = 5;
-        //var navbarHeight = $('#topbar').outerHeight();
-        //var hidetopbar = true;
-        //$('#form1').scroll(function(event) {
-        //    if(hidetopbar) {
-        //        didScroll = true;
-        //    }
-        //});
+        var didScroll;
+        var lastScrollTop = 0;
+        var delta = 5;
+        var navbarHeight = $('#topbar').outerHeight();
+        var hidetopbar = true;
+        $('#form1').scroll(function(event) {
+            if(hidetopbar) {
+                didScroll = true;
+            }
+        });
 
-        //setInterval(function() {
-        //    if(didScroll){
-        //        hasScrolled();
-        //        didScroll = false;
-        //    }
-        //}, 100);
+        setInterval(function() {
+            if(didScroll){
+                hasScrolled();
+                didScroll = false;
+            }
+        }, 100);
 
-        //function hasScrolled() {
-        //    var st = $('#form1').scrollTop();
-        //    if(Math.abs(lastScrollTop - st) <= delta) {
-        //        return;
-        //    }
-        //    if(st > lastScrollTop && st > navbarHeight) {
-        //        $('#topbar').removeClass('nav-down').addClass('nav-up');
-        //    } else {
-        //        $('#topbar').removeClass('nav-up').addClass('nav-down');
-        //    }
-        //    lastScrollTop = st;
-        //}
+        function hasScrolled() {
+            var st = $('#form1').scrollTop();
+            if(Math.abs(lastScrollTop - st) <= delta) {
+                return;
+            }
+            if(st > lastScrollTop && st > navbarHeight) {
+                $('#topbar').removeClass('nav-down').addClass('nav-up');
+            } else {
+                $('#topbar').removeClass('nav-up').addClass('nav-down');
+            }
+            lastScrollTop = st;
+        }
         //####
         //var pTop = 0;
         //window.addEventListener('scroll', function () {
@@ -662,7 +676,7 @@
                     }
                 });
                 
-                //document.getElementById('txtSearch').focus();
+                document.getElementById('txtSearch').focus();
             }else{
                 document.getElementById('txtSearch').focus();
                 //hideSearchBar();
@@ -735,7 +749,7 @@
             if (target.getAttribute('alt') == 'gotoartist') {
                 selectedArtist = parseInt(getCookie('nowplaying_artist'));
                 unfade(target);
-                var speed = 300;
+                var speed = 0;
                 var top = document.getElementById('form1').scrollTop;
                 if(top == 0) {
                     speed = 0;
@@ -777,7 +791,7 @@
                 }
                 unfade(target);
                 //$('#optiondiv').slideToggle("fast", function () {
-                $(form).animate({ scrollTop: top }, 300, function () {
+                $(form).animate({ scrollTop: top }, 0, function () {
                     var songid = getCookie('nowplaying');
                     PageMethods.getArtistBySongId(songid, set2);
                     function set2(response) {
@@ -881,7 +895,7 @@
                         if(document.getElementById('imgartistdiv').style.display.toString() !== 'none'){
                             top = 333;
                         }
-                        $(form).animate({ scrollTop: top }, 300, function () {
+                        $(form).animate({ scrollTop: top }, 0, function () {
                             var album_id = target.id;
                             selectedAlbum = parseInt(target.id);
                             PageMethods.getArtistByAlbumId(album_id, set);
@@ -923,7 +937,7 @@
                 $( "#resultdiv" ).slideUp( "fast", function() {
                     $('#tdSearch').slideUp("fast");
                     $('#searchdiv').slideUp("fast", function(){
-                        var speed = 300;
+                        var speed = 0;
                         var top = parseInt(document.getElementById('form1').scrollTop);
                         if(top == 0) {
                             speed = 0;
@@ -1093,7 +1107,7 @@
             if (target.getAttribute('type') == 'artist') {
                 //unfade(target);
                 selectedArtist = parseInt(target.getAttribute('alt').split('@')[2]);
-                var speed = 300;
+                var speed = 0;
                 var top = parseInt(document.getElementById('form1').scrollTop);
                 if(top == 0) {
                     speed = 0;
@@ -1256,7 +1270,7 @@
 
             global.onhashchange = function () {
                 
-                checkMenus();
+                //checkMenus();
                 if (global.location.hash !== _hash) {
                     global.location.hash = _hash;
                 }
@@ -1295,6 +1309,7 @@
             document.getElementById('artistlist').innerHTML = "";
             //document.getElementById('artistdiv').style.display = 'inline';
             var ul = document.getElementById('artistlist');
+            var ul_temp = document.getElementById('artistlist_temp');
             PageMethods.getArtists(fill, failed);
             function failed() {
                 alert("Error al cargar artistas.");
@@ -1337,9 +1352,13 @@
                     img.height = '80'; 
                     li.appendChild(a);
 
+                    var img_temp = document.createElement('img');
+                    img_temp.src = list[i].image;
+
                     a.appendChild(img);
                     a.appendChild(year);
                     ul.appendChild(li);
+                    ul_temp.appendChild(img_temp);
                 }
                 //document.getElementById('artistdiv').style.display = 'inline';
                 $('img').on('error', function () {
@@ -1891,6 +1910,19 @@
             clickEvent.initEvent('dblclick', true, true);
             e.target.dispatchEvent(clickEvent);
         }
+
+        function preLoadCovers() {
+            var c_list = document.getElementById('albumlist_temp');
+            PageMethods.getAlbumImg(function (response) {
+                var list = JSON.parse(response);
+                for (i = 0; i < list.length; i++) {
+                    var img = document.createElement('img');
+                    img.src = list[i];
+                    c_list.appendChild(img);
+                }
+                
+            });
+        };
     </script>
 </body>
 

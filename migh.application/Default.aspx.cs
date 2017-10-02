@@ -186,12 +186,13 @@ namespace migh.application
                     {
                         audioformat.Value = "Opus 96k VBR";
                     }
+                    else if (lib.configuration.AudioFileURLFormat.Equals(HttpContext.Current.Session["hqsourceformat"] as string))
+                    {
+                        audioformat.Value = "AAC 256k VBR";
+                    }
                     else
                     {
-                        if (lib.configuration.AudioFileURLFormat.Equals(HttpContext.Current.Session["hqsourceformat"] as string))
-                        {
-                            audioformat.Value = "AAC 256k VBR";
-                        }
+                        audioformat.Value = "MP3 192k VBR";
                     }
                     HttpContext.Current.Response.Cookies.Remove("audioformat");
                     HttpContext.Current.Response.Cookies.Add(audioformat);
@@ -202,29 +203,21 @@ namespace migh.application
                     {
                         lib.configuration.AudioFileURLFormat = HttpContext.Current.Session["hqsourceformat"] as string;
                     }
+                    else if (audioformat.Value.Equals("Opus 96k VBR"))
+                    {
+                        lib.configuration.AudioFileURLFormat = System.Configuration.ConfigurationManager.AppSettings["lqsourceformat"];
+                    }
                     else
                     {
-                        if (audioformat.Value.Equals("Opus 96k VBR"))
-                        {
-                            lib.configuration.AudioFileURLFormat = System.Configuration.ConfigurationManager.AppSettings["lqsourceformat"];
-                        }
+                        lib.configuration.AudioFileURLFormat = System.Configuration.ConfigurationManager.AppSettings["mqsourceformat"];
                     }
                 }
             }
             catch (Exception ex)
             {
                 HttpCookie audioformat = new HttpCookie("audioformat");
-                if (lib.configuration.AudioFileURLFormat.Equals(System.Configuration.ConfigurationManager.AppSettings["lqsourceformat"]))
-                {
-                    audioformat.Value = "Opus 96k VBR";
-                }
-                else
-                {
-                    if (lib.configuration.AudioFileURLFormat.Equals(HttpContext.Current.Session["hqsourceformat"] as string))
-                    {
-                        audioformat.Value = "AAC 256k VBR";
-                    }
-                }
+                audioformat.Value = "MP3 192k VBR";
+                lib.configuration.AudioFileURLFormat = System.Configuration.ConfigurationManager.AppSettings["mqsourceformat"];
                 HttpContext.Current.Response.Cookies.Remove("audioformat");
                 HttpContext.Current.Response.Cookies.Add(audioformat);
             }
@@ -802,18 +795,35 @@ namespace migh.application
         public static void switchAudioFormat()
         {
             HttpCookie audioformat = new HttpCookie("audioformat");
-            if (lib.configuration.AudioFileURLFormat.Equals(System.Configuration.ConfigurationManager.AppSettings["lqsourceformat"]))
+            try
             {
-                audioformat.Value = "AAC 256k VBR";
-                lib.configuration.AudioFileURLFormat = HttpContext.Current.Session["hqsourceformat"] as string;
+                
+                if (lib.configuration.AudioFileURLFormat.Equals(System.Configuration.ConfigurationManager.AppSettings["lqsourceformat"]))
+                {
+                    audioformat.Value = "MP3 192k VBR";
+                    lib.configuration.AudioFileURLFormat = System.Configuration.ConfigurationManager.AppSettings["mqsourceformat"];
+                }
+                else if (lib.configuration.AudioFileURLFormat.Equals(System.Configuration.ConfigurationManager.AppSettings["mqsourceformat"]))
+                {
+                    audioformat.Value = "AAC 256k VBR";
+                    lib.configuration.AudioFileURLFormat = System.Configuration.ConfigurationManager.AppSettings["hqsourceformat"];
+                }
+                else
+                {
+                    audioformat.Value = "Opus 96k VBR";
+                    lib.configuration.AudioFileURLFormat = System.Configuration.ConfigurationManager.AppSettings["lqsourceformat"];
+                }
+                HttpContext.Current.Response.Cookies.Remove("audioformat");
+                HttpContext.Current.Response.Cookies.Add(audioformat);
             }
-            else
+            catch
             {
-                audioformat.Value = "Opus 96k VBR";
-                lib.configuration.AudioFileURLFormat = System.Configuration.ConfigurationManager.AppSettings["lqsourceformat"];
+                audioformat.Value = "MP3 192k VBR";
+                lib.configuration.AudioFileURLFormat = System.Configuration.ConfigurationManager.AppSettings["mqsourceformat"];
+                HttpContext.Current.Response.Cookies.Remove("audioformat");
+                HttpContext.Current.Response.Cookies.Add(audioformat);
             }
-            HttpContext.Current.Response.Cookies.Remove("audioformat");
-            HttpContext.Current.Response.Cookies.Add(audioformat);
+            
         }
         [WebMethod]
         public static string getArtiststr(int id)
@@ -826,6 +836,18 @@ namespace migh.application
             str.id = artist.id;
             str.image = string.Format(artistimageformat, Tools.ConvertToGitHubFolder(artist.name));
             return Newtonsoft.Json.JsonConvert.SerializeObject(str);
+        }
+        [WebMethod]
+        public static string getAlbumImg()
+        {
+            List<string> list = new List<string>();
+            foreach (Album a in lib.album_list)
+            {
+                Artist art = lib.artist_list.FirstOrDefault(ar => ar.id == a.artist_id);
+                string src = string.Format(lib.configuration.AlbumCoverImageFileURLFormat, Tools.ConvertToGitHubFolder(art.name), Tools.ConvertToGitHubFolder(a.name));
+                list.Add(src.Replace("Cover.jpg", "CoverSmall.jpg"));
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(list);
         }
     }
 }
