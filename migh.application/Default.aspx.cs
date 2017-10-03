@@ -890,8 +890,8 @@ namespace migh.application
                     artist_id = art.id
                 });
             }
-            string asd = Newtonsoft.Json.JsonConvert.SerializeObject(list);
-            return Newtonsoft.Json.JsonConvert.SerializeObject(list);
+            List<strAlbum> sortedlist = list.OrderByDescending(a => a.year).ToList();
+            return Newtonsoft.Json.JsonConvert.SerializeObject(sortedlist);
         }
         [WebMethod]
         public static string get_all_tracks() 
@@ -914,7 +914,8 @@ namespace migh.application
                     url = string.Format(lib.configuration.AudioFileURLFormat, Tools.ConvertToGitHubFolder(art.name), Tools.ConvertToGitHubFolder(alb.name), Song.getFileFormat(sng))
                 });
             }
-            return Newtonsoft.Json.JsonConvert.SerializeObject(list);
+            List<strTrack> sortedlist = list.OrderBy(a => a.tracknumber).ToList();
+            return Newtonsoft.Json.JsonConvert.SerializeObject(sortedlist);
         }
     }
 }
