@@ -635,6 +635,8 @@ namespace migh.application
             public string name { get; set; }
             public string artist { get; set; }
             public string cover { get; set; }
+            public int year { get; set; }
+            public int artist_id { get; set; }
         }
         struct strTrack
         {
@@ -642,6 +644,11 @@ namespace migh.application
             public string name { get; set; }
             public string artist { get; set; }
             public string album { get; set; }
+            public string duration { get; set; }
+            public int tracknumber { get; set; }
+            public int album_id { get; set; }
+            public int artist_id { get; set; }
+            public string url { get; set; }
         }
         [WebMethod]
         public static string SearchArtist(string name)
@@ -709,6 +716,8 @@ namespace migh.application
             public string JoinedPerformers { get; set; }
             public string cover { get; set; }
             public string url { get; set; }
+            public string duration { get; set; }
+
         }
         [WebMethod]
         public static string GetTrack(string id)
@@ -846,6 +855,63 @@ namespace migh.application
                 Artist art = lib.artist_list.FirstOrDefault(ar => ar.id == a.artist_id);
                 string src = string.Format(lib.configuration.AlbumCoverImageFileURLFormat, Tools.ConvertToGitHubFolder(art.name), Tools.ConvertToGitHubFolder(a.name));
                 list.Add(src.Replace("Cover.jpg", "CoverSmall.jpg"));
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(list);
+        }
+        [WebMethod]
+        public static string get_all_artists()
+        {
+            List<strArtist> list = new List<strArtist>();
+            foreach (Artist art in lib.artist_list)
+            {
+                list.Add(new strArtist()
+                {
+                    id = art.id,
+                    name = art.name,
+                    image = string.Format(System.Configuration.ConfigurationManager.AppSettings["artistimageformat"], Tools.ConvertToGitHubFolder(art.name))
+                });
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(list);
+        }
+        [WebMethod]
+        public static string get_all_albums()
+        {
+            List<strAlbum> list = new List<strAlbum>();
+            foreach (Album alb in lib.album_list)
+            {
+                Artist art = lib.artist_list.FirstOrDefault(a => a.id == alb.artist_id);
+                list.Add(new strAlbum()
+                {
+                    id = alb.id,
+                    artist = art.name,
+                    name = alb.name,
+                    cover = string.Format(lib.configuration.AlbumCoverImageFileURLFormat, Tools.ConvertToGitHubFolder(art.name), Tools.ConvertToGitHubFolder(alb.name)),
+                    year = Convert.ToInt32(alb.year),
+                    artist_id = art.id
+                });
+            }
+            return Newtonsoft.Json.JsonConvert.SerializeObject(list);
+        }
+        [WebMethod]
+        public static string get_all_tracks() 
+        {
+            List<strTrack> list = new List<strTrack>();
+            foreach (Song sng in lib.song_list)
+            {
+                Artist art = lib.artist_list.FirstOrDefault(a => a.id == sng.artist_id);
+                Album alb = lib.album_list.FirstOrDefault(album => album.id == sng.album_id);
+                list.Add(new strTrack()
+                {
+                    id = sng.id,
+                    name = sng.name,
+                    artist = art.name,
+                    album = alb.name,
+                    duration = sng.duration.ToString("mm\\:ss"),
+                    tracknumber = Convert.ToInt32(sng.Track),
+                    album_id = alb.id,
+                    artist_id = art.id,
+                    url = string.Format(lib.configuration.AudioFileURLFormat, Tools.ConvertToGitHubFolder(art.name), Tools.ConvertToGitHubFolder(alb.name), Song.getFileFormat(sng))
+                });
             }
             return Newtonsoft.Json.JsonConvert.SerializeObject(list);
         }
