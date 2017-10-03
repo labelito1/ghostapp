@@ -626,7 +626,7 @@
         };
         var lblArtist = document.getElementById('lblArtist');
         lblArtist.ondblclick = function (event) {
-            $('#imgartistdiv').toggle();
+            $('#imgartistdiv').slideToggle("fast");
         };
         var imgArtist = document.getElementById('imgArtist');
         imgArtist.onclick = function (event) {
