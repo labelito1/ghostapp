@@ -127,9 +127,6 @@
                             <label id="lblSongAlbum" style="font-family:Verdana; font-size:10px; color:#FBFBFB">Álbum</label>
                         </div>
                     </td>
-                    <td style="text-align: left; width:65px">
-                        <img id="goTop" alt="imgSongCover" style="height:32px; display:none; width:32px" src="images/uparrow.png" />
-                    </td>
                 </tr>
             </table>
         </div>
@@ -182,7 +179,6 @@
         <div id="artistdiv">
             <ul id="artistlist" class="imagesArtist">            
             </ul>
-            
         </div>
         <ul id="artistlist_temp" class="imagesArtist" style="display:none">            
         </ul>
@@ -663,25 +659,25 @@
         });
         var btnOpenSearch = document.getElementById('btnOpenSearch');
         btnOpenSearch.onclick = function (event) {
-            $('#artistdiv').hide();
-            $('#optiondiv').hide();
-            var display = document.getElementById('searchdiv').style.display;
-            if(display == 'none'){
-                $('#searchdiv').slideToggle("fast");
-                $('#tdSearch').slideToggle("fast", function(){
-                    var searchlist = document.getElementById('searchlist');
-                    var nodes = searchlist.parentNode.getElementsByTagName("div");
-                    if(nodes.length > 0) {
-                        $('#resultdiv').slideToggle("fast");
-                    }
-                });
+            //$('#artistdiv').hide();
+            //$('#optiondiv').hide();
+            //var display = document.getElementById('searchdiv').style.display;
+            //if(display == 'none'){
+            //    $('#searchdiv').slideToggle("fast");
+            //    $('#tdSearch').slideToggle("fast", function(){
+            //        var searchlist = document.getElementById('searchlist');
+            //        var nodes = searchlist.parentNode.getElementsByTagName("div");
+            //        if(nodes.length > 0) {
+            //            $('#resultdiv').slideToggle("fast");
+            //        }
+            //    });
                 
-                document.getElementById('txtSearch').focus();
-            }else{
-                document.getElementById('txtSearch').focus();
-                //hideSearchBar();
-            }
-            unfade(btnOpenSearch);
+            //    document.getElementById('txtSearch').focus();
+            //}else{
+            //    document.getElementById('txtSearch').focus();
+            //    //hideSearchBar();
+            //}
+            //unfade(btnOpenSearch);
         };
         var mute = document.getElementById('mute');
         mute.onclick = function (event) {
@@ -828,8 +824,32 @@
             var target = getEventTarget(event);
             if (target.getAttribute('type') == 'imgplay') {
                 //unfade(target);
-                document.getElementById('listSongs').selectedIndex = parseInt($(target).attr('id')) + 1;
-                __doPostBack('<%= listSongs.UniqueID %>', parseInt($(target).attr('id')));
+                <%-- document.getElementById('listSongs').selectedIndex = parseInt($(target).attr('id')) + 1;
+                __doPostBack('<%= listSongs.UniqueID %>', parseInt($(target).attr('id')));--%>
+
+                //new code :)
+                var id = parseInt($(target).attr('id'));
+                for (var i = 0; i < __tracks__.length; i++) {
+                    if (__tracks__[i].id == id) {
+                        $(audiosource).attr('src', __tracks__[i].url);
+                        setArtist(__tracks__[i].artist);
+                        setAlbum(__tracks__[i].album);
+                        setTitle(__tracks__[i].name);
+
+                        var cover = "";
+                        for (var j = 0; j < __albums__.length; j++) {
+                            if (__albums__[j].id == __tracks__[i].album_id) {
+                                cover = __albums__[j].cover;
+                                break;
+                            }
+                        }
+                        setCover(cover);
+                        audio.load();
+                        audio.play();
+                        checkNowplaying();
+                        break;
+                    }
+                }
             }
         };
         //ul.addEventListener('touchend', preventZoom);
@@ -1090,8 +1110,91 @@
                 var target = getEventTarget(event);
                 var id = parseInt(target.getAttribute('id'));
 
-                document.getElementById('listAlbums').selectedIndex = id + 1;
-                __doPostBack('<%= listAlbums.UniqueID %>', '');
+                <%-- document.getElementById('listAlbums').selectedIndex = id + 1;
+                __doPostBack('<%= listAlbums.UniqueID %>', '');--%>
+                //new code :)
+                var ol = document.getElementById('tracklist');
+                //document.getElementById('tracklist').style.display = 'none';
+                document.getElementById('tracklist').innerHTML = "";
+                for (i = 0; i < __tracks__.length; i++) {
+                    if (__tracks__[i].album_id == id) {
+                        var li = document.createElement('li');
+
+                        var img = document.createElement('img');
+                        var tracknum = document.createElement('label');
+                        tracknum.className = 'dark';
+                        tracknum.innerHTML = __tracks__[i].tracknumber + '. ';
+                        var duration = document.createElement('label');
+                        var durationdiv = document.createElement('div');
+                        var durationdivchild = document.createElement('div');
+
+                        durationdiv.className = 'duration';
+                        duration.className = 'dark';
+                        duration.innerHTML = __tracks__[i].duration;
+                        //duration.style.marginLeft = '78%';
+                        //duration.style.cssFloat = 'right';
+                        //duration.style.marginTop = '6px';
+                        durationdivchild.appendChild(duration);
+                        durationdiv.appendChild(durationdivchild);
+                        //span
+                        var helper = document.createElement('span');
+                        helper.style.display = 'inline-block';
+                        helper.style.height = '100%';
+                        helper.style.verticalAlign = 'middle';
+                        helper.style.visibility = 'hidden';
+                        //<span style="display: inline-block; height: 100%; vertical-align: middle; visibility:hidden"></span>
+
+                        //
+                        img.id = __tracks__[i].id;
+                        img.setAttribute('type', 'imgplay');
+                        img.src = 'images/song.png';
+                        img.width = 20;
+                        img.height = 20;
+                        img.style.verticalAlign = 'middle';
+                        //img.style.marginBottom = '-8px';
+                        li.style.verticalAlign = 'middle';
+                        img.style.marginRight = '10px';
+                        img.style.styleFloat = 'left';
+                        li.setAttribute('alt', __tracks__[i].id);
+                        //li.appendChild(img);
+                        li.style.whiteSpace = 'nowrap';
+                        //li.style.width = '90%';
+                        var label = document.createElement('label');
+
+                        label.style.display = 'inline-block';
+                        label.style.maxWidth = '80%';
+                        label.style.whiteSpace = 'normal';
+                        label.setAttribute('type', 'imgplay');
+                        label.id = __tracks__[i].id;
+                        duration.id = __tracks__[i].id;
+                        duration.setAttribute('type', 'imgplay');
+                        label.innerHTML = __tracks__[i].name;
+                        //li.appendChild(helper);
+                        var div = document.createElement('div');
+                        div.id = __tracks__[i].id;
+                        div.style.height = '100%';
+                        div.setAttribute('type', 'imgplay');
+                        var helper = document.createElement('span');
+                        helper.style.display = 'inline-block';
+                        helper.style.height = '100%';
+                        helper.style.verticalAlign = 'middle';
+                        helper.style.visibility = 'hidden';
+                        div.appendChild(helper);
+                        div.appendChild(tracknum);
+                        div.appendChild(label);
+                        div.appendChild(durationdiv);
+                        div.style.overflow = 'hidden';
+                        li.style.verticalAlign = 'middle';
+                        li.setAttribute('type', 'imgplay');
+                        li.id = __tracks__[i].id;
+                        div.addEventListener('dblclick', play_track)
+                        li.appendChild(div);
+                        //li.style.maxWidth = '400px';
+                        ol.appendChild(li);
+                    }
+                    
+                }
+                checkNowplaying();
 
                 document.getElementById('tracklist').style.marginBottom = '200px';
                 if (document.getElementById('tracklist').innerHTML == '') {
@@ -1120,8 +1223,63 @@
                     var id = parseInt(target.getAttribute('id'));
                     document.getElementById('lblArtist').innerHTML = name;
                     document.getElementById('imgArtist').src = image;
-                    document.getElementById('listArtists').selectedIndex = id + 1;
-                    __doPostBack('<%= listAlbums.UniqueID %>', '');
+                    //document.getElementById('listArtists').selectedIndex = id + 1;
+                    <%--//__doPostBack('<%= listAlbums.UniqueID %>', '');--%>
+                    //new code :)
+                    document.getElementById('albumlist').innerHTML = "";
+                    document.getElementById('coverdiv').style.display = 'inline';
+                    var ul = document.getElementById('albumlist');
+                    var width = document.getElementById('maindiv').offsetWidth;
+                    for (i = 0; i < __albums__.length; i++) {
+                        if (__albums__[i].artist_id == selectedArtist) {
+                            var li = document.createElement('li');
+                            li.style.padding = '6px';
+                            li.style.textAlign = '-webkit-center';
+                            var img = document.createElement('img');
+                            img.style.borderRadius = '0px';
+                            img.style.borderWidth = '2px';
+                            img.style.borderColor = '#242a33';
+                            img.style.borderStyle = 'solid';
+                            img.style.padding = '0px';
+                            //img.style.paddingBottom = '2px';
+                            var label = document.createElement('label');
+                            var year = document.createElement('label');
+                            label.className = 'searchtext';
+                            //label.style.fontWeight = "bold";
+                            label.style.width = '120px';
+                            label.style.fontSize = '10px';
+                            label.innerHTML = __albums__[i].name;
+                            label.style.paddingBottom = '3px';
+                            year.className = 'searchtext';
+                            //year.style.fontWeight = "bold";
+                            year.style.width = '100px';
+                            year.style.fontSize = '9px';
+                            year.style.paddingTop = '3px';
+                            year.innerHTML = __albums__[i].year;
+                            //year.style.paddingTop = '3px';
+
+                            img.alt = __albums__[i].name + "@" + __albums__[i].artist + "@" + __albums__[i].id;
+                            var a = document.createElement('div');
+                            a.style.display = 'inline-grid';
+
+                            img.setAttribute('type', 'albumitem');
+                            img.id = i;
+                            img.src = __albums__[i].cover.toString().replace("Cover.jpg", "CoverSmall.jpg");
+                            img.style.display = 'inline';
+                            img.width = '95';
+                            img.height = '95';
+                            li.appendChild(a);
+                            a.appendChild(label);
+                            a.appendChild(img);
+                            a.appendChild(year);
+                            ul.appendChild(li);
+                        }
+                    }
+                    checkSelectedAlbum();
+                    var width = document.getElementById('maindiv').offsetWidth;
+                    $("#albumlist").css({
+                        "maxWidth": width - 15
+                    });
                 });
                 checkSelectedArtist();
             }
@@ -1365,7 +1523,9 @@
                     $(this).attr('src', 'images/artist.png');
                 });
             }
-            
+            fill_artists();
+            fill_albums();
+            fill_tracks();
         }
         
         function resetTimeout() {
@@ -1564,22 +1724,27 @@
         //});
         //var play = document.getElementById('play');
         $(audio).on('timeupdate', function () {
-            if (audio.paused) {
-                $('#play').attr('src', 'images/play.png');
-            } else {
-                $('#play').attr('src', 'images/pause.png');
-            }
-            $('#seekbar').attr("value", this.currentTime / this.duration);
-            var date = new Date(null);
-            date.setSeconds(this.currentTime); // specify value for SECONDS here
+            try {
+                if (audio.paused) {
+                    $('#play').attr('src', 'images/play.png');
+                } else {
+                    $('#play').attr('src', 'images/pause.png');
+                }
+                $('#seekbar').attr("value", this.currentTime / this.duration);
+                var date = new Date(null);
+                date.setSeconds(this.currentTime); // specify value for SECONDS here
 
-            var currentTime = date.toISOString().substr(14, 5);
-            var date2 = new Date(null);
-            date2.setSeconds(this.duration); // specify value for SECONDS here
-            var duration = date2.toISOString().substr(14, 5);
-            document.getElementById('currentTime').innerHTML = currentTime;
-            document.getElementById('duration').innerHTML = duration;
-            //updatemetadata();
+                var currentTime = date.toISOString().substr(14, 5);
+                var date2 = new Date(null);
+                date2.setSeconds(this.duration); // specify value for SECONDS here
+                var duration = date2.toISOString().substr(14, 5);
+                document.getElementById('currentTime').innerHTML = currentTime;
+                document.getElementById('duration').innerHTML = duration;
+                //updatemetadata();
+            } catch (err) {
+
+            }
+            
         });
         var seekbar = document.getElementById('seekbar');
         seekbar.ondblclick = function (e) {
@@ -1921,6 +2086,23 @@
                     c_list.appendChild(img);
                 }
                 
+            });
+        };
+
+
+        function fill_artists() {
+            PageMethods.get_all_artists(function (response) {
+                __artists__ = JSON.parse(response);
+            });
+        };
+        function fill_albums() {
+            PageMethods.get_all_albums(function (response) {
+                __albums__ = JSON.parse(response);
+            });
+        };
+        function fill_tracks() {
+            PageMethods.get_all_tracks(function (response) {
+                __tracks__ = JSON.parse(response);
             });
         };
     </script>
