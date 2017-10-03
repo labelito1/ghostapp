@@ -4,6 +4,10 @@ var audiosource = document.createElement('source');
 var __artists__;
 var __albums__;
 var __tracks__;
+var __queue__;
+var __nowplaying__ = -1;
+var __nowplayingid__ = -1;
+var __currentalbum__ = -1;
 $(document).ready(function () {
     
     adjustSize();
@@ -21,7 +25,7 @@ $(document).ready(function () {
     adjustMisc();
     preLoadCovers();
     audio.appendChild(audiosource);
-    audio.addEventListener("ended", TriggerNextSong)
+    audio.addEventListener("ended", __next__)
     
     $('a').each(function () {
         $(this).data('href', $(this).attr('href')).hide();

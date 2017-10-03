@@ -101,7 +101,7 @@
 #artistdiv {
     height:auto;
     position: fixed;
-    bottom: 81px;
+    bottom: 0px;
     display: block;
 }
 #artistlist::-webkit-scrollbar {
