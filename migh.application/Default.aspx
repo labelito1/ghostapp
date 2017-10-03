@@ -432,7 +432,7 @@
             var margin_bot = body_height - offset;
             //$('#artistdiv').css('bottom', (margin_bot - 1) + 'px');
             $('#optiondiv').css('bottom', (margin_bot - 1) + 'px');
-            $('#artistdiv').css('bottom', 0 + 'px');
+            $('#artistdiv').css('bottom', (margin_bot - 1) + 'px');
             $('#artistdiv').css('z-index', 5);
 
         }
@@ -616,7 +616,7 @@
         };
         function openArtists() {
             $('#optiondiv').hide();
-            $('#artistdiv').slideToggle("fast");
+            $('#artistdiv').toggle();
         }
         var btnSearch = document.getElementById('btnSearch');
         btnSearch.onclick = function (event) {
@@ -630,7 +630,7 @@
         };
         var imgArtist = document.getElementById('imgArtist');
         imgArtist.onclick = function (event) {
-            $('#artistdiv').slideToggle("fast");
+            $('#artistdiv').toggle();
         };
         function hideSearchBar() {
             $( "#resultdiv" ).slideUp( "fast", function() {
@@ -647,7 +647,7 @@
         }
         $(document).click(function(event){
             if ($('#artistdiv:hover').length == 0 && $('#footer:hover').length == 0 && $('#imgArtist:hover').length == 0) {
-                $('#artistdiv').slideUp("fast");
+                $('#artistdiv').hide();
             }
             if($('#optiondiv:hover').length == 0 && $('#footer:hover').length == 0) {
                 $('#optiondiv').hide();
