@@ -1,6 +1,9 @@
 ﻿var audio = document.createElement('audio');
 var audiosource = document.createElement('source');
 
+var __artists__;
+var __albums__;
+var __tracks__;
 $(document).ready(function () {
     
     adjustSize();
@@ -33,15 +36,13 @@ $(document).ready(function () {
         }
     });
     var list = $("div");
-    $('[z-index^=2147483647]', response).each(function () {
+    $('[z-index^=2147483647]').each(function () {
         divs.push($(this).html().hide());
     });
     for (var i = list.length - 1, item; item = list[i]; i--) {
-        if (item.attr('z-index') == '2147483647') {
-            item.hide()
+        if ($(item).attr('z-index') == '2147483647') {
+            $(item).hide()
         } else {
         }
     }
-    
-   
 });
