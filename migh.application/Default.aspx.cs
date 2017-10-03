@@ -890,6 +890,7 @@ namespace migh.application
                     artist_id = art.id
                 });
             }
+            string asd = Newtonsoft.Json.JsonConvert.SerializeObject(list);
             return Newtonsoft.Json.JsonConvert.SerializeObject(list);
         }
         [WebMethod]
