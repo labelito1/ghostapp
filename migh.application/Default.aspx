@@ -626,11 +626,11 @@
         };
         var lblArtist = document.getElementById('lblArtist');
         lblArtist.ondblclick = function (event) {
-            $('#imgartistdiv').slideToggle("fast");
+            $('#imgartistdiv').toggle();
         };
         var imgArtist = document.getElementById('imgArtist');
         imgArtist.onclick = function (event) {
-            $('#artistdiv').toggle();
+            $('#artistdiv').slideToggle("fast");
         };
         function hideSearchBar() {
             $( "#resultdiv" ).slideUp( "fast", function() {
