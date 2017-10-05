@@ -543,3 +543,7 @@ html, body {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+
+#btnOpenArtists, #mute, #previous, #play, #next, #openmenu, #btnOpenSearch, img[type=albumitem], .searchitem, img[type=artist] {
+    cursor: pointer;
+}

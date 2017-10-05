@@ -84,13 +84,13 @@ function queueAddListEnd(list) {
 };
 
 $(document).ready(function () {
-    //if (window.location.hostname == 'ghost.somee.com') {
-    //    window.oncontextmenu = function (event) {
-    //        event.preventDefault();
-    //        event.stopPropagation();
-    //        return false;
-    //    };
-    //}
+    if (window.location.hostname == 'ghost.somee.com') {
+        window.oncontextmenu = function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            return false;
+        };
+    }
     getAudioFormat();
     fillArtists();
     adjustSize();

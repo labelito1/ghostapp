@@ -50,4 +50,3 @@ C:\GitHub\ghostapp\migh.application\bin\System.Web.Http.xml
 C:\GitHub\ghostapp\migh.application\bin\System.Web.Http.WebHost.xml
 C:\GitHub\ghostapp\migh.application\obj\Release\migh.application.dll
 C:\GitHub\ghostapp\migh.application\obj\Release\migh.application.pdb
-C:\GitHub\ghostapp\migh.application\obj\Release\migh.application.csprojResolveAssemblyReference.cache
