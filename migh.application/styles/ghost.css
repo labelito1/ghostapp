@@ -533,9 +533,6 @@ html, body {
 }
 
 #form1 {
-    -webkit-transition: background-color 1000ms linear;
-    -ms-transition: background-color 1000ms linear;
-    transition: background-color 1000ms linear;
     background: -webkit-linear-gradient(to bottom, #002536 1%,#000000 105%); /* Chrome10-25,Safari5.1-6 */
     background: linear-gradient(to bottom, #002536 1%,#000000 105%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     height: 100%;
@@ -547,7 +544,7 @@ html, body {
     box-sizing: border-box;
 }
 
-#btnOpenArtists, 
+/*#btnOpenArtists, 
 #mute, 
 #previous, 
 #play, 
@@ -561,4 +558,4 @@ img[alt=gotoalbum],
 img[alt=gotoartist],
 #lblAudioFormat {
     cursor: pointer;
-}
+}*/
