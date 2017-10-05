@@ -500,7 +500,7 @@ ol {
         border-color: #2c323c;
         border-right: 2px;
         border-right-style: solid;
-        background-color: rgba(0, 44, 64, 0.19);
+        background-color: black;
         list-style-type: none;
         margin-bottom: 5px;
         -moz-border-radius: 3px;
@@ -533,6 +533,9 @@ html, body {
 }
 
 #form1 {
+    -webkit-transition: background-color 1000ms linear;
+    -ms-transition: background-color 1000ms linear;
+    transition: background-color 1000ms linear;
     background: -webkit-linear-gradient(to bottom, #002536 1%,#000000 105%); /* Chrome10-25,Safari5.1-6 */
     background: linear-gradient(to bottom, #002536 1%,#000000 105%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     height: 100%;
@@ -544,6 +547,18 @@ html, body {
     box-sizing: border-box;
 }
 
-#btnOpenArtists, #mute, #previous, #play, #next, #openmenu, #btnOpenSearch, img[type=albumitem], .searchitem, img[type=artist] {
+#btnOpenArtists, 
+#mute, 
+#previous, 
+#play, 
+#next, 
+#openmenu, 
+#btnOpenSearch, 
+img[type=albumitem], 
+.searchitem, 
+img[type=artist],
+img[alt=gotoalbum],
+img[alt=gotoartist],
+#lblAudioFormat {
     cursor: pointer;
 }

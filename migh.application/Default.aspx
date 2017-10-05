@@ -7,6 +7,7 @@
 <html id="xd" style="background-color: #20242b" xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
     <link href="styles/ghost.css" rel="stylesheet" />
+    <script src="scripts/Vibrant.min.js"></script>
     <%--<link href="scripts/jquery-ui.min.css" rel="stylesheet" />
     <script src="scripts/jquery-ui.min.js"></script>
     <script src="scripts/jquery.custom-animations.js"></script>--%>
@@ -117,7 +118,7 @@
             <table style="border-spacing:0px; width:100%; height:100%">
                 <tr style="width:100%">
                     <td id="tdImg" style="text-align: left; width:65px">
-                        <img id="imgSongCoverTop" alt="imgSongCover" src="images/album.png" />
+                        <img id="imgSongCoverTop" alt="imgSongCover" crossOrigin="Anonymous" src="images/album.png" />
                     </td>
                     <td id="tdTag" style="text-align:left; width:100%; vertical-align:middle; height:100%">
                         <div style="height:100%; width:100%; display:grid">
@@ -734,6 +735,7 @@
             }
             if (target.getAttribute('alt') == 'gotoartist') {
                 try {
+                    unfade(target);
                     var track = getTrack(__nowplayingid__);
                     var artist = getArtist(track.artist_id);
                     var target = getEventTarget(event);
@@ -799,7 +801,7 @@
                         "maxWidth": width - 15
                     });
                     checkSelectedArtist();
-                    $("#form1").animate({ scrollTop: 0 }, "fast");
+                    $("#form1").animate({ scrollTop: 0 }, 0);
                 } catch (err) {
 
                 }
@@ -814,7 +816,7 @@
                     var albname = album.name;
                     var artname = artist.name;
 
-                    selectedAlbum = parseInt(target.getAttribute('id'));
+                    selectedAlbum = album.id;
                     var albumlabel = document.createElement('label');
                     var artistlabel = document.createElement('label');
                     var br = document.createElement('br');
@@ -930,10 +932,10 @@
                         document.getElementById('tracklist').innerHTML = inner;
                     }
                     checkSelectedAlbum();
-                    $("#form1").animate({ scrollTop: 410 }, "fast");
+                    $("#form1").animate({ scrollTop: 410 }, 0);
                     setTimeout(function () {
                         $('#topbar').removeClass('nav-down').addClass('nav-up');
-                    }, 300);
+                    }, 100);
                     $('#topbar').removeClass('nav-down').addClass('nav-up');
                 } catch (err) {
 
@@ -1052,7 +1054,7 @@
                 __doPostBack('<%= listAlbums.UniqueID %>', '');--%>
                 //new code :)
                 var ol = document.getElementById('tracklist');
-                $("#form1").animate({ scrollTop: 410 }, "fast");
+                $("#form1").animate({ scrollTop: 410 }, 0);
                 //document.getElementById('tracklist').style.display = 'none';
                 document.getElementById('tracklist').innerHTML = "";
                 for (i = 0; i < __tracks__.length; i++) {
@@ -1161,7 +1163,7 @@
                 if(top == 0) {
                     speed = 0;
                 }
-                $(form).animate({ scrollTop: 0 }, "fast");
+                $(form).animate({ scrollTop: 0 }, 0);
                 try {
                     var target = getEventTarget(event);
                     if (target.getAttribute('type') == 'artist') {
@@ -1170,7 +1172,7 @@
                         if (top == 0) {
                             speed = 0;
                         }
-                        $('#form1').animate({ scrollTop: 0 }, "fast");
+                        $('#form1').animate({ scrollTop: 0 }, 0);
                         var artist = getArtist(selectedArtist);
                         var target = getEventTarget(event);
                         var name = artist.name;
@@ -1402,7 +1404,7 @@
                         //
                         img.id = __tracks__[i].id;
                         img.setAttribute('type', 'imgplay');
-                        img.src = 'images/song.png';
+                        //img.src = 'images/song.png';
                         img.width = 20;
                         img.height = 20;
                         img.style.verticalAlign = 'middle';
@@ -1470,7 +1472,7 @@
                     if (top == 0) {
                         speed = 0;
                     }
-                    $('#form1').animate({ scrollTop: 0 }, "fast");
+                    $('#form1').animate({ scrollTop: 0 }, 0);
                     var target = getEventTarget(event);
                     var name = target.getAttribute('alt').split('@')[0];
                     var image = target.getAttribute('alt').split('@')[1];
@@ -1561,7 +1563,7 @@
                         items[i].style.borderColor = '#004463';
                         items[i].style.backgroundColor = '#2c323c';
                     } else {
-                        items[i].style.backgroundColor = 'rgba(0, 44, 64, 0.19)';
+                        items[i].style.backgroundColor = 'black';
                         items[i].style.borderColor = '#2c323c';
                     }
                 }
@@ -2197,7 +2199,7 @@
                             
                 if(art || alb || trk) {
                     $('#resultdiv').slideDown("fast");
-                    $("#resultdiv").animate({ scrollTop: 0 }, "fast");
+                    $("#resultdiv").animate({ scrollTop: 0 }, 0);
                 } else {
                     var label = document.createElement('label');
                     label.innerHTML = 'No hay resultados';

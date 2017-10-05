@@ -91,6 +91,7 @@
     <Content Include="scripts\jquery-ui.min.js" />
     <Content Include="scripts\jquery.custom-animations.js" />
     <Content Include="scripts\jquery.js" />
+    <Content Include="scripts\Vibrant.min.js" />
     <Content Include="styles\ghost.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
