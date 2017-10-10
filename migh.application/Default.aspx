@@ -51,7 +51,7 @@
                                 <img style="height:24px; width:24px" src="images/artist.png" />
                             </td>
                             <td style="width:100%; height:40px">
-                                <asp:DropDownList ID="listArtists" style="color:#FBFBFB; width:100%; height:100%; font-family:Verdana" runat="server" OnSelectedIndexChanged="listArtists_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+                                <asp:DropDownList ID="listArtists" style="color:#FBFBFB; width:100%; height:100%" runat="server" OnSelectedIndexChanged="listArtists_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
                             </td>
                         </tr>
                     </table>
@@ -80,7 +80,7 @@
                                     <img style="height:24px; width:24px" src="images/album.png" />
                                 </td>
                                 <td style="width:100%; height:40px">
-                                    <asp:DropDownList ID="listAlbums" style="color:#FBFBFB; background-color:#181818; border:none; width:100%; height:100%; font-family:Verdana" runat="server" OnSelectedIndexChanged="listAlbums_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+                                    <asp:DropDownList ID="listAlbums" style="color:#FBFBFB; background-color:#181818; border:none; width:100%; height:100%" runat="server" OnSelectedIndexChanged="listAlbums_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
                                 </td>
                             </tr>
                         </table>
@@ -90,7 +90,7 @@
                                     <img style="height:24px; width:24px" src="images/track.png" />
                                 </td>
                                 <td style="width:100%; height:40px">
-                                    <asp:DropDownList ID="listSongs" style="color:#FBFBFB; background-color:#181818; border:none; width:100%; height:100%; font-family:Verdana" runat="server" AutoPostBack="true" OnSelectedIndexChanged="listSongs_SelectedIndexChanged"></asp:DropDownList>
+                                    <asp:DropDownList ID="listSongs" style="color:#FBFBFB; background-color:#181818; border:none; width:100%; height:100%" runat="server" AutoPostBack="true" OnSelectedIndexChanged="listSongs_SelectedIndexChanged"></asp:DropDownList>
                                 </td>
                             </tr>
                         </table>
@@ -123,9 +123,9 @@
                     <td id="tdTag" style="text-align:left; width:100%; vertical-align:middle; height:100%">
                         <div style="height:100%; width:100%; display:grid">
                             <span style="display: inline-block; height: 100%; vertical-align: top; visibility:hidden"></span>
-                            <label id="lblSongTitle" style="font-family:Verdana; font-size:10px; color:#FBFBFB">Título</label>
-                            <label id="lblSongArtist" style="font-family:Verdana; font-size:10px; color:#97A09B">Artista</label>
-                            <label id="lblSongAlbum" style="font-family:Verdana; font-size:10px; color:#FBFBFB">Álbum</label>
+                            <label id="lblSongTitle" style="font-size:10px; color:#FBFBFB">Título</label>
+                            <label id="lblSongArtist" style="font-size:10px; color:#97A09B">Artista</label>
+                            <label id="lblSongAlbum" style="font-size:10px; color:#FBFBFB">Álbum</label>
                         </div>
                     </td>
                 </tr>
@@ -151,7 +151,7 @@
                                 event.cancel = true;
                                 $('#txtSearch').blur();
                             }" 
-                            style="text-align:left; color:#FBFBFB; font-family:Verdana; font-size:11px"/>
+                            style="text-align:left; color:#FBFBFB; font-size:11px"/>
                     </td>
                     <td id="btnSearch" style="display:none; text-align: left; width:65px; vertical-align:middle; opacity:0.7">
                         <img style="height:20px; margin-top:5px; width:20px; margin-right:10px; margin-left:10px" src="images/up.png" />
@@ -202,8 +202,8 @@
             </div>
         </div>
         <div style="display:flex; pointer-events:none">
-            <label id="currentTime" style="position:relative; pointer-events:none; z-index: 2; display:flex; font-family: verdana; font-size: 8px; color: #FBFBFB; margin-left:3px">00:00</label>
-            <label id="duration"  style="position:relative; pointer-events:none; z-index: 2; display:flex; font-family: verdana; font-size: 8px; color: #FBFBFB; margin-right:3px">00:00</label>
+            <label id="currentTime" style="position:relative; pointer-events:none; z-index: 2; display:flex; font-size: 8px; color: #FBFBFB; margin-left:3px">00:00</label>
+            <label id="duration"  style="position:relative; pointer-events:none; z-index: 2; display:flex; font-size: 8px; color: #FBFBFB; margin-right:3px">00:00</label>
         </div>
         
         <div style="position:relative; z-index: 5; text-align: center; height: 100%; display:inline-flex">
