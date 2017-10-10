@@ -1,4 +1,13 @@
-﻿#tracklist {
+﻿[type=imgplay]:active {
+    background-color: #2c323c;
+}
+[type=albumitem]:active, [type=artist]:active {
+    opacity: 0.5;
+}
+[type=imgplay], [type=albumitem], [type=artist] {
+    transition: 300ms linear;
+}
+#tracklist {
     margin-bottom: 200px;
 }
 #footer div div{
@@ -31,7 +40,7 @@
     -webkit-transition: top 200ms linear;
     transition: top 200ms linear;
     border-spacing: 0px;
-    background-color: rgba(0, 35, 51, 0.9);
+    background-color: rgba(12, 12, 12, 0.5);
     position: fixed;
     left: 0;
     width: 100%;
@@ -331,7 +340,7 @@ progress[value]::-webkit-progress-value {
     -webkit-border-radius: 3px;
     margin-top:2px;
     border-radius: 3px;
-    background-color: #004463;
+    background-color: white;
     height: 3px;
 }
 
@@ -346,7 +355,7 @@ progress[value]::-moz-progress-value {
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
-    background-color: #004463;
+    background-color: white;
     height: 3px;
 }
 

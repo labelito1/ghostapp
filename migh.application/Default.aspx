@@ -1523,9 +1523,9 @@
                             img.id = __albums__[i].id;
                             img.src = __albums__[i].cover.toString().replace("Cover.jpg", "CoverSmall.jpg");
                             img.style.display = 'inline';
-                            img.width = '97';
-                            img.height = '97';
-                            img.style.padding = '2px';
+                            img.width = '95';
+                            img.height = '95';
+                            //img.style.padding = '2px';
                             li.appendChild(a);
                             a.appendChild(label);
                             a.appendChild(img);
@@ -1560,11 +1560,11 @@
                 for (i = 0; i < items.length; i++) {
                     var itemid = parseInt(items[i].getAttribute('alt'));
                     if (itemid == parseInt(__nowplayingid__)) {
-                        items[i].style.borderColor = '#004463';
+                        items[i].style.borderColor = 'white';
                         items[i].style.backgroundColor = '#2c323c';
                     } else {
-                        items[i].style.backgroundColor = 'black';
-                        items[i].style.borderColor = '#2c323c';
+                        items[i].style.backgroundColor = 'rgba(0, 0, 0, 0.23)';
+                        items[i].style.borderColor = 'rgba(0, 0, 0, 0.23)';
                     }
                 }
             }catch(err) {
@@ -1771,9 +1771,9 @@
                     img.id = i;
                     img.src = list[i].image.toString().replace('image.jpg', 'imagesmall.jpg');
                     img.style.display = 'inline';
-                    img.width = '82';
-                    img.height = '82';
-                    img.style.padding = '2px';
+                    img.width = '80';
+                    img.height = '80';
+                    //img.style.padding = '2px';
                     li.appendChild(a);
 
                     var img_temp = document.createElement('img');
