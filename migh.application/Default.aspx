@@ -1431,6 +1431,9 @@
                         div.id = __tracks__[i].id;
                         div.style.height = '100%';
                         div.setAttribute('type', 'imgplay');
+                        div.style.borderRadius = '3px';
+                        div.style.paddingLeft = '5px';
+                        div.style.paddingRight = '5px';
                         var helper = document.createElement('span');
                         helper.style.display = 'inline-block';
                         helper.style.height = '100%';
