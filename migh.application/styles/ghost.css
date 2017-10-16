@@ -44,12 +44,6 @@
     position: fixed;
     left: 0;
     width: 100%;
-    /*border-bottom-style: solid; 
-    border-bottom-color: #004463; 
-    border-width: 3px;*/
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
 }
 .duration div {
     background-color: #2c323c;
