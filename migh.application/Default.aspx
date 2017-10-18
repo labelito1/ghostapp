@@ -38,7 +38,7 @@
                             <img id="imgArtist" alt="imgArtist" src="images/artist.png" style="box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.6)" />
                         </div>
                         <div style="margin-bottom:5px; margin-top:5px">
-                            <label id="lblArtist" style="padding:6px; font-size:10px; border-radius:50px">Artista</label>
+                            <label id="lblArtist" style="padding:6px; font-size:11px; border-radius:50px">Artista</label>
                         </div>
                     </td>
                 </tr>
@@ -123,9 +123,9 @@
                     <td id="tdTag" style="text-align:left; width:100%; vertical-align:middle; height:100%">
                         <div style="height:100%; width:100%; display:grid">
                             <span style="display: inline-block; height: 100%; vertical-align: top; visibility:hidden"></span>
-                            <label id="lblSongTitle" style="font-size:10px; color:#FBFBFB">Título</label>
-                            <label id="lblSongArtist" style="font-size:10px; color:#97A09B">Artista</label>
-                            <label id="lblSongAlbum" style="font-size:10px; color:#FBFBFB">Álbum</label>
+                            <label id="lblSongTitle" style="font-size:11px; color:#FBFBFB">Título</label>
+                            <label id="lblSongArtist" style="font-size:11px; color:#97A09B">Artista</label>
+                            <label id="lblSongAlbum" style="font-size:11px; color:#FBFBFB">Álbum</label>
                         </div>
                     </td>
                 </tr>
@@ -202,8 +202,8 @@
             </div>
         </div>
         <div style="display:flex; pointer-events:none">
-            <label id="currentTime" style="position:relative; pointer-events:none; z-index: 2; display:flex; font-size: 8px; color: #FBFBFB; margin-left:3px">00:00</label>
-            <label id="duration"  style="position:relative; pointer-events:none; z-index: 2; display:flex; font-size: 8px; color: #FBFBFB; margin-right:3px">00:00</label>
+            <label id="currentTime" style="position:relative; pointer-events:none; z-index: 2; display:flex; font-size: 9px; color: #FBFBFB; margin-left:3px">00:00</label>
+            <label id="duration"  style="position:relative; pointer-events:none; z-index: 2; display:flex; font-size: 9px; color: #FBFBFB; margin-right:3px">00:00</label>
         </div>
         
         <div style="position:relative; z-index: 5; text-align: center; height: 100%; display:inline-flex">
@@ -379,10 +379,16 @@
 
         function hasScrolled() {
             var st = $('#form1').scrollTop();
+            console.log(st);
             if(Math.abs(lastScrollTop - st) <= delta) {
                 return;
             }
-            if(st > lastScrollTop && st > navbarHeight) {
+            //if(st > lastScrollTop && st > navbarHeight) {
+            //    $('#topbar').removeClass('nav-down').addClass('nav-up');
+            //} else {
+            //    $('#topbar').removeClass('nav-up').addClass('nav-down');
+            //}
+            if (st > 60) {
                 $('#topbar').removeClass('nav-down').addClass('nav-up');
             } else {
                 $('#topbar').removeClass('nav-up').addClass('nav-down');
@@ -421,7 +427,16 @@
             $('#optiondiv').css('bottom', (margin_bot - 1) + 'px');
             $('#artistdiv').css('bottom', (margin_bot - 1) + 'px');
             $('#artistdiv').css('z-index', 5);
-
+            var alw = parseInt($('#coverTab').css('width'));
+            var n = ((alw) / 3) / 2;
+            if (n > 90) {
+                $('#albumlist img').css('width', n + 'px')
+                $('#albumlist img').css('height', n + 'px')
+            } else {
+                $('#albumlist img').css('width', '90px')
+                $('#albumlist img').css('height', '90px')
+            }
+            
         }
         function adjustSize() {
             var width = document.getElementById('maindiv').offsetWidth;
@@ -497,7 +512,7 @@
                 label.className = 'searchtext';
                 //label.style.fontWeight = "bold";
                 label.style.width = '120px';
-                label.style.fontSize = '10px';
+                label.style.fontSize = '11px';
                 label.innerHTML = albumnames[i];
                 label.style.paddingBottom = '3px';
                 year.className = 'searchtext';
@@ -767,7 +782,7 @@
                             label.className = 'searchtext';
                             //label.style.fontWeight = "bold";
                             label.style.width = '120px';
-                            label.style.fontSize = '10px';
+                            label.style.fontSize = '11px';
                             label.innerHTML = __albums__[i].name;
                             label.style.paddingBottom = '3px';
                             year.className = 'searchtext';
@@ -1205,7 +1220,7 @@
                                 label.className = 'searchtext';
                                 //label.style.fontWeight = "bold";
                                 label.style.width = '120px';
-                                label.style.fontSize = '10px';
+                                label.style.fontSize = '11px';
                                 label.innerHTML = __albums__[i].name;
                                 label.style.paddingBottom = '3px';
                                 year.className = 'searchtext';
@@ -1376,6 +1391,8 @@
                 var ol = document.getElementById('tracklist');
                 //document.getElementById('tracklist').style.display = 'none';
                 document.getElementById('tracklist').innerHTML = "";
+                
+
                 for (i = 0; i < __tracks__.length; i++) {
                     if (__tracks__[i].album_id == id) {
                         var li = document.createElement('li');
@@ -1493,6 +1510,8 @@
                     document.getElementById('coverdiv').style.display = 'inline';
                     var ul = document.getElementById('albumlist');
                     var width = document.getElementById('maindiv').offsetWidth;
+                    var alw = parseInt($('#coverTab').css('width'));
+
                     for (i = 0; i < __albums__.length; i++) {
                         if (__albums__[i].artist_id == selectedArtist) {
                             var li = document.createElement('li');
@@ -1510,7 +1529,7 @@
                             label.className = 'searchtext';
                             //label.style.fontWeight = "bold";
                             label.style.width = '120px';
-                            label.style.fontSize = '10px';
+                            label.style.fontSize = '11px';
                             label.innerHTML = __albums__[i].name;
                             label.style.paddingBottom = '3px';
                             year.className = 'searchtext';
@@ -1529,8 +1548,14 @@
                             img.id = __albums__[i].id;
                             img.src = __albums__[i].cover.toString().replace("Cover.jpg", "CoverSmall.jpg");
                             img.style.display = 'inline';
-                            img.width = '95';
-                            img.height = '95';
+                            img.style.minWidth = '95';
+                            img.style.minHeight = '95';
+                            img.width = '90';
+                            img.height = '90';
+                            if (((alw / 3) / 2) > 90) {
+                                img.width = (alw / 3) / 2;
+                                img.height = (alw / 3) / 2;
+                            }
                             //img.style.padding = '2px';
                             li.appendChild(a);
                             a.appendChild(label);
@@ -1764,7 +1789,7 @@
                     var year = document.createElement('label');
                     year.className = 'searchtext';
                     year.style.width = '100px';
-                    year.style.fontSize = '9px';
+                    year.style.fontSize = '10px';
                     year.style.paddingTop = '3px';
                     year.innerHTML = list[i].name;
                     //year.style.paddingTop = '3px';
@@ -2082,7 +2107,7 @@
                                 var label = document.createElement('label');
                                 label.className = 'searchtext';
                                 label.innerText = 'Artistas';
-                                label.style.fontSize = '10px';
+                                label.style.fontSize = '11px';
                                 label.style.color = '#83868b';
                                 list.appendChild(label);
                             }
@@ -2123,7 +2148,7 @@
                                 var label = document.createElement('label');
                                 label.className = 'searchtext';
                                 label.innerText = 'Álbumes';
-                                label.style.fontSize = '10px';
+                                label.style.fontSize = '11px';
                                 label.style.color = '#83868b';
                                 list.appendChild(label);
                             }
@@ -2162,7 +2187,7 @@
                                 var label = document.createElement('label');
                                 label.className = 'searchtext';
                                 label.innerText = 'Canciones';
-                                label.style.fontSize = '10px';
+                                label.style.fontSize = '11px';
                                 label.style.color = '#83868b';
                                 list.appendChild(label);
                             }
