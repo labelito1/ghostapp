@@ -761,60 +761,8 @@
                     selectedArtist = artist.id;
                     document.getElementById('lblArtist').innerHTML = name;
                     document.getElementById('imgArtist').src = image;
-                    document.getElementById('albumlist').innerHTML = "";
-                    document.getElementById('coverdiv').style.display = 'inline';
-                    var ul = document.getElementById('albumlist');
-                    var width = document.getElementById('maindiv').offsetWidth;
-                    for (i = 0; i < __albums__.length; i++) {
-                        if (__albums__[i].artist_id == selectedArtist) {
-                            var li = document.createElement('li');
-                            li.style.padding = '6px';
-                            li.style.textAlign = '-webkit-center';
-                            var img = document.createElement('img');
-                            img.style.borderRadius = '0px';
-                            img.style.borderWidth = '2px';
-                            img.style.borderColor = '#242a33';
-                            img.style.borderStyle = 'solid';
-                            img.style.padding = '0px';
-                            //img.style.paddingBottom = '2px';
-                            var label = document.createElement('label');
-                            var year = document.createElement('label');
-                            label.className = 'searchtext';
-                            //label.style.fontWeight = "bold";
-                            label.style.width = '120px';
-                            label.style.fontSize = '11px';
-                            label.innerHTML = __albums__[i].name;
-                            label.style.paddingBottom = '3px';
-                            year.className = 'searchtext';
-                            //year.style.fontWeight = "bold";
-                            year.style.width = '100px';
-                            year.style.fontSize = '9px';
-                            year.style.paddingTop = '3px';
-                            year.innerHTML = __albums__[i].year;
-                            //year.style.paddingTop = '3px';
-
-                            img.alt = __albums__[i].name + "@" + __albums__[i].artist + "@" + __albums__[i].id;
-                            var a = document.createElement('div');
-                            a.style.display = 'inline-grid';
-
-                            img.setAttribute('type', 'albumitem');
-                            img.id = __albums__[i].id;
-                            img.src = __albums__[i].cover.toString().replace("Cover.jpg", "CoverSmall.jpg");
-                            img.style.display = 'inline';
-                            img.width = '95';
-                            img.height = '95';
-                            li.appendChild(a);
-                            a.appendChild(label);
-                            a.appendChild(img);
-                            a.appendChild(year);
-                            ul.appendChild(li);
-                        }
-                    }
+                    loadArtist(selectedArtist);
                     checkSelectedAlbum();
-                    var width = document.getElementById('maindiv').offsetWidth;
-                    $("#albumlist").css({
-                        "maxWidth": width - 15
-                    });
                     checkSelectedArtist();
                     $("#form1").animate({ scrollTop: 0 }, 0);
                 } catch (err) {
@@ -856,99 +804,9 @@
                     var target = getEventTarget(event);
                     var id = album.id;
 
-                <%-- document.getElementById('listAlbums').selectedIndex = id + 1;
-                __doPostBack('<%= listAlbums.UniqueID %>', '');--%>
-                    //new code :)
-                    var ol = document.getElementById('tracklist');
-                    //document.getElementById('tracklist').style.display = 'none';
-                    document.getElementById('tracklist').innerHTML = "";
-                    for (i = 0; i < __tracks__.length; i++) {
-                        if (__tracks__[i].album_id == id) {
-                            var li = document.createElement('li');
-
-                            var img = document.createElement('img');
-                            var tracknum = document.createElement('label');
-                            tracknum.className = 'dark';
-                            tracknum.innerHTML = __tracks__[i].tracknumber + '. ';
-                            var duration = document.createElement('label');
-                            var durationdiv = document.createElement('div');
-                            var durationdivchild = document.createElement('div');
-
-                            durationdiv.className = 'duration';
-                            duration.className = 'dark';
-                            duration.innerHTML = __tracks__[i].duration;
-                            //duration.style.marginLeft = '78%';
-                            //duration.style.cssFloat = 'right';
-                            //duration.style.marginTop = '6px';
-                            durationdivchild.appendChild(duration);
-                            durationdiv.appendChild(durationdivchild);
-                            //span
-                            var helper = document.createElement('span');
-                            helper.style.display = 'inline-block';
-                            helper.style.height = '100%';
-                            helper.style.verticalAlign = 'middle';
-                            helper.style.visibility = 'hidden';
-                            //<span style="display: inline-block; height: 100%; vertical-align: middle; visibility:hidden"></span>
-
-                            //
-                            img.id = __tracks__[i].id;
-                            img.setAttribute('type', 'imgplay');
-                            img.src = 'images/song.png';
-                            img.width = 20;
-                            img.height = 20;
-                            img.style.verticalAlign = 'middle';
-                            //img.style.marginBottom = '-8px';
-                            li.style.verticalAlign = 'middle';
-                            img.style.marginRight = '10px';
-                            img.style.styleFloat = 'left';
-                            li.setAttribute('alt', __tracks__[i].id);
-                            //li.appendChild(img);
-                            li.style.whiteSpace = 'nowrap';
-                            //li.style.width = '90%';
-                            var label = document.createElement('label');
-
-                            label.style.display = 'inline-block';
-                            label.style.maxWidth = '80%';
-                            label.style.whiteSpace = 'normal';
-                            label.setAttribute('type', 'imgplay');
-                            label.id = __tracks__[i].id;
-                            duration.id = __tracks__[i].id;
-                            duration.setAttribute('type', 'imgplay');
-                            label.innerHTML = __tracks__[i].name;
-                            //li.appendChild(helper);
-                            var div = document.createElement('div');
-                            div.id = __tracks__[i].id;
-                            div.style.height = '100%';
-                            div.setAttribute('type', 'imgplay');
-                            div.style.borderRadius = '3px';
-                            div.style.paddingLeft = '5px';
-                            div.style.paddingRight = '5px';
-                            var helper = document.createElement('span');
-                            helper.style.display = 'inline-block';
-                            helper.style.height = '100%';
-                            helper.style.verticalAlign = 'middle';
-                            helper.style.visibility = 'hidden';
-                            div.appendChild(helper);
-                            div.appendChild(tracknum);
-                            div.appendChild(label);
-                            div.appendChild(durationdiv);
-                            div.style.overflow = 'hidden';
-                            li.style.verticalAlign = 'middle';
-                            li.setAttribute('type', 'imgplay');
-                            li.id = __tracks__[i].id;
-                            div.addEventListener('dblclick', play_track)
-                            li.appendChild(div);
-                            //li.style.maxWidth = '400px';
-                            ol.appendChild(li);
-                        }
-
-                    }
+                    loadAlbum(id);
                     checkNowplaying();
 
-                    document.getElementById('tracklist').style.marginBottom = '200px';
-                    if (document.getElementById('tracklist').innerHTML == '') {
-                        document.getElementById('tracklist').innerHTML = inner;
-                    }
                     checkSelectedAlbum();
                     $("#form1").animate({ scrollTop: 410 }, 0);
                     setTimeout(function () {
@@ -1068,97 +926,8 @@
                 var target = getEventTarget(event);
                 var id = album.id;
 
-                <%-- document.getElementById('listAlbums').selectedIndex = id + 1;
-                __doPostBack('<%= listAlbums.UniqueID %>', '');--%>
-                //new code :)
-                var ol = document.getElementById('tracklist');
-                $("#form1").animate({ scrollTop: 410 }, 0);
-                //document.getElementById('tracklist').style.display = 'none';
-                document.getElementById('tracklist').innerHTML = "";
-                for (i = 0; i < __tracks__.length; i++) {
-                    if (__tracks__[i].album_id == id) {
-                        var li = document.createElement('li');
-
-                        var img = document.createElement('img');
-                        var tracknum = document.createElement('label');
-                        tracknum.className = 'dark';
-                        tracknum.innerHTML = __tracks__[i].tracknumber + '. ';
-                        var duration = document.createElement('label');
-                        var durationdiv = document.createElement('div');
-                        var durationdivchild = document.createElement('div');
-
-                        durationdiv.className = 'duration';
-                        duration.className = 'dark';
-                        duration.innerHTML = __tracks__[i].duration;
-                        //duration.style.marginLeft = '78%';
-                        //duration.style.cssFloat = 'right';
-                        //duration.style.marginTop = '6px';
-                        durationdivchild.appendChild(duration);
-                        durationdiv.appendChild(durationdivchild);
-                        //span
-                        var helper = document.createElement('span');
-                        helper.style.display = 'inline-block';
-                        helper.style.height = '100%';
-                        helper.style.verticalAlign = 'middle';
-                        helper.style.visibility = 'hidden';
-                        //<span style="display: inline-block; height: 100%; vertical-align: middle; visibility:hidden"></span>
-
-                        //
-                        img.id = __tracks__[i].id;
-                        img.setAttribute('type', 'imgplay');
-                        img.src = 'images/song.png';
-                        img.width = 20;
-                        img.height = 20;
-                        img.style.verticalAlign = 'middle';
-                        //img.style.marginBottom = '-8px';
-                        li.style.verticalAlign = 'middle';
-                        img.style.marginRight = '10px';
-                        img.style.styleFloat = 'left';
-                        li.setAttribute('alt', __tracks__[i].id);
-                        //li.appendChild(img);
-                        li.style.whiteSpace = 'nowrap';
-                        //li.style.width = '90%';
-                        var label = document.createElement('label');
-
-                        label.style.display = 'inline-block';
-                        label.style.maxWidth = '80%';
-                        label.style.whiteSpace = 'normal';
-                        label.setAttribute('type', 'imgplay');
-                        label.id = __tracks__[i].id;
-                        duration.id = __tracks__[i].id;
-                        duration.setAttribute('type', 'imgplay');
-                        label.innerHTML = __tracks__[i].name;
-                        //li.appendChild(helper);
-                        var div = document.createElement('div');
-                        div.id = __tracks__[i].id;
-                        div.style.height = '100%';
-                        div.setAttribute('type', 'imgplay');
-                        var helper = document.createElement('span');
-                        helper.style.display = 'inline-block';
-                        helper.style.height = '100%';
-                        helper.style.verticalAlign = 'middle';
-                        helper.style.visibility = 'hidden';
-                        div.appendChild(helper);
-                        div.appendChild(tracknum);
-                        div.appendChild(label);
-                        div.appendChild(durationdiv);
-                        div.style.overflow = 'hidden';
-                        li.style.verticalAlign = 'middle';
-                        li.setAttribute('type', 'imgplay');
-                        li.id = __tracks__[i].id;
-                        div.addEventListener('dblclick', play_track)
-                        li.appendChild(div);
-                        //li.style.maxWidth = '400px';
-                        ol.appendChild(li);
-                    }
-
-                }
+                loadAlbum(id);
                 checkNowplaying();
-
-                document.getElementById('tracklist').style.marginBottom = '200px';
-                if (document.getElementById('tracklist').innerHTML == '') {
-                    document.getElementById('tracklist').innerHTML = inner;
-                }
                 checkSelectedAlbum();
                 hideSearchBar();
                 setTimeout(function () {
@@ -1173,8 +942,6 @@
                 $( "#resultdiv" ).slideUp( "fast", function() {
                     $('#tdSearch').slideUp("fast");
                     $('#searchdiv').slideUp("fast");
-
-                    
                 });
                 var speed = 0;
                 var top = parseInt(document.getElementById('form1').scrollTop);
@@ -1199,68 +966,14 @@
                         var id = parseInt(target.getAttribute('id'));
                         document.getElementById('lblArtist').innerHTML = name;
                         document.getElementById('imgArtist').src = image;
-                        document.getElementById('albumlist').innerHTML = "";
-                        document.getElementById('coverdiv').style.display = 'inline';
-                        var ul = document.getElementById('albumlist');
-                        var width = document.getElementById('maindiv').offsetWidth;
-                        for (i = 0; i < __albums__.length; i++) {
-                            if (__albums__[i].artist_id == selectedArtist) {
-                                var li = document.createElement('li');
-                                li.style.padding = '6px';
-                                li.style.textAlign = '-webkit-center';
-                                var img = document.createElement('img');
-                                img.style.borderRadius = '0px';
-                                img.style.borderWidth = '2px';
-                                img.style.borderColor = '#242a33';
-                                img.style.borderStyle = 'solid';
-                                img.style.padding = '0px';
-                                //img.style.paddingBottom = '2px';
-                                var label = document.createElement('label');
-                                var year = document.createElement('label');
-                                label.className = 'searchtext';
-                                //label.style.fontWeight = "bold";
-                                label.style.width = '120px';
-                                label.style.fontSize = '11px';
-                                label.innerHTML = __albums__[i].name;
-                                label.style.paddingBottom = '3px';
-                                year.className = 'searchtext';
-                                //year.style.fontWeight = "bold";
-                                year.style.width = '100px';
-                                year.style.fontSize = '9px';
-                                year.style.paddingTop = '3px';
-                                year.innerHTML = __albums__[i].year;
-                                //year.style.paddingTop = '3px';
-
-                                img.alt = __albums__[i].name + "@" + __albums__[i].artist + "@" + __albums__[i].id;
-                                var a = document.createElement('div');
-                                a.style.display = 'inline-grid';
-
-                                img.setAttribute('type', 'albumitem');
-                                img.id = __albums__[i].id;
-                                img.src = __albums__[i].cover.toString().replace("Cover.jpg", "CoverSmall.jpg");
-                                img.style.display = 'inline';
-                                img.width = '95';
-                                img.height = '95';
-                                li.appendChild(a);
-                                a.appendChild(label);
-                                a.appendChild(img);
-                                a.appendChild(year);
-                                ul.appendChild(li);
-                            }
-                        }
+                        loadArtist(selectedArtist);
                         checkSelectedAlbum();
-                        var width = document.getElementById('maindiv').offsetWidth;
-                        $("#albumlist").css({
-                            "maxWidth": width - 15
-                        });
                         checkSelectedArtist();
                         hideSearchBar();
                     }
                 } catch (err) {
                     console.log(err);
                 }
-                checkSelectedArtist();
-                //hideSearchBar();
             }
         };
         function selectAlbum(album_id) {
@@ -1388,98 +1101,8 @@
                 <%-- document.getElementById('listAlbums').selectedIndex = id + 1;
                 __doPostBack('<%= listAlbums.UniqueID %>', '');--%>
                 //new code :)
-                var ol = document.getElementById('tracklist');
-                //document.getElementById('tracklist').style.display = 'none';
-                document.getElementById('tracklist').innerHTML = "";
-                
-
-                for (i = 0; i < __tracks__.length; i++) {
-                    if (__tracks__[i].album_id == id) {
-                        var li = document.createElement('li');
-
-                        var img = document.createElement('img');
-                        var tracknum = document.createElement('label');
-                        tracknum.className = 'dark';
-                        tracknum.innerHTML = __tracks__[i].tracknumber + '. ';
-                        var duration = document.createElement('label');
-                        var durationdiv = document.createElement('div');
-                        var durationdivchild = document.createElement('div');
-
-                        durationdiv.className = 'duration';
-                        duration.className = 'dark';
-                        duration.innerHTML = __tracks__[i].duration;
-                        //duration.style.marginLeft = '78%';
-                        //duration.style.cssFloat = 'right';
-                        //duration.style.marginTop = '6px';
-                        durationdivchild.appendChild(duration);
-                        durationdiv.appendChild(durationdivchild);
-                        //span
-                        var helper = document.createElement('span');
-                        helper.style.display = 'inline-block';
-                        helper.style.height = '100%';
-                        helper.style.verticalAlign = 'middle';
-                        helper.style.visibility = 'hidden';
-                        //<span style="display: inline-block; height: 100%; vertical-align: middle; visibility:hidden"></span>
-
-                        //
-                        img.id = __tracks__[i].id;
-                        img.setAttribute('type', 'imgplay');
-                        //img.src = 'images/song.png';
-                        img.width = 20;
-                        img.height = 20;
-                        img.style.verticalAlign = 'middle';
-                        //img.style.marginBottom = '-8px';
-                        li.style.verticalAlign = 'middle';
-                        img.style.marginRight = '10px';
-                        img.style.styleFloat = 'left';
-                        li.setAttribute('alt', __tracks__[i].id);
-                        //li.appendChild(img);
-                        li.style.whiteSpace = 'nowrap';
-                        //li.style.width = '90%';
-                        var label = document.createElement('label');
-
-                        label.style.display = 'inline-block';
-                        label.style.maxWidth = '80%';
-                        label.style.whiteSpace = 'normal';
-                        label.setAttribute('type', 'imgplay');
-                        label.id = __tracks__[i].id;
-                        duration.id = __tracks__[i].id;
-                        duration.setAttribute('type', 'imgplay');
-                        label.innerHTML = __tracks__[i].name;
-                        //li.appendChild(helper);
-                        var div = document.createElement('div');
-                        div.id = __tracks__[i].id;
-                        div.style.height = '100%';
-                        div.setAttribute('type', 'imgplay');
-                        div.style.borderRadius = '3px';
-                        div.style.paddingLeft = '5px';
-                        div.style.paddingRight = '5px';
-                        var helper = document.createElement('span');
-                        helper.style.display = 'inline-block';
-                        helper.style.height = '100%';
-                        helper.style.verticalAlign = 'middle';
-                        helper.style.visibility = 'hidden';
-                        div.appendChild(helper);
-                        div.appendChild(tracknum);
-                        div.appendChild(label);
-                        div.appendChild(durationdiv);
-                        div.style.overflow = 'hidden';
-                        li.style.verticalAlign = 'middle';
-                        li.setAttribute('type', 'imgplay');
-                        li.id = __tracks__[i].id;
-                        div.addEventListener('dblclick', play_track)
-                        li.appendChild(div);
-                        //li.style.maxWidth = '400px';
-                        ol.appendChild(li);
-                    }
-                    
-                }
+                loadAlbum(id);
                 checkNowplaying();
-
-                document.getElementById('tracklist').style.marginBottom = '200px';
-                if (document.getElementById('tracklist').innerHTML == '') {
-                    document.getElementById('tracklist').innerHTML = inner;
-                }
                 checkSelectedAlbum();
             }
         };
@@ -1503,78 +1126,177 @@
                     var id = parseInt(target.getAttribute('id'));
                     document.getElementById('lblArtist').innerHTML = name;
                     document.getElementById('imgArtist').src = image;
-                    //document.getElementById('listArtists').selectedIndex = id + 1;
-                    <%--//__doPostBack('<%= listAlbums.UniqueID %>', '');--%>
-                    //new code :)
-                    document.getElementById('albumlist').innerHTML = "";
-                    document.getElementById('coverdiv').style.display = 'inline';
-                    var ul = document.getElementById('albumlist');
-                    var width = document.getElementById('maindiv').offsetWidth;
-                    var alw = parseInt($('#coverTab').css('width'));
-
-                    for (i = 0; i < __albums__.length; i++) {
-                        if (__albums__[i].artist_id == selectedArtist) {
-                            var li = document.createElement('li');
-                            li.style.padding = '6px';
-                            li.style.textAlign = '-webkit-center';
-                            var img = document.createElement('img');
-                            img.style.borderRadius = '0px';
-                            img.style.borderWidth = '2px';
-                            img.style.borderColor = 'white';
-                            img.style.borderStyle = 'solid';
-                            img.style.padding = '0px';
-                            //img.style.paddingBottom = '2px';
-                            var label = document.createElement('label');
-                            var year = document.createElement('label');
-                            label.className = 'searchtext';
-                            //label.style.fontWeight = "bold";
-                            label.style.width = '120px';
-                            label.style.fontSize = '11px';
-                            label.innerHTML = __albums__[i].name;
-                            label.style.paddingBottom = '3px';
-                            year.className = 'searchtext';
-                            //year.style.fontWeight = "bold";
-                            year.style.width = '100px';
-                            year.style.fontSize = '9px';
-                            year.style.paddingTop = '3px';
-                            year.innerHTML = __albums__[i].year;
-                            //year.style.paddingTop = '3px';
-
-                            img.alt = __albums__[i].name + "@" + __albums__[i].artist + "@" + __albums__[i].id;
-                            var a = document.createElement('div');
-                            a.style.display = 'inline-grid';
-
-                            img.setAttribute('type', 'albumitem');
-                            img.id = __albums__[i].id;
-                            img.src = __albums__[i].cover.toString().replace("Cover.jpg", "CoverSmall.jpg");
-                            img.style.display = 'inline';
-                            img.style.minWidth = '95';
-                            img.style.minHeight = '95';
-                            img.width = '90';
-                            img.height = '90';
-                            if (((alw / 3) / 2) > 90) {
-                                img.width = (alw / 3) / 2;
-                                img.height = (alw / 3) / 2;
-                            }
-                            //img.style.padding = '2px';
-                            li.appendChild(a);
-                            a.appendChild(label);
-                            a.appendChild(img);
-                            a.appendChild(year);
-                            ul.appendChild(li);
-                        }
-                    }
+                    
+                    loadArtist(selectedArtist);
                     checkSelectedAlbum();
-                    var width = document.getElementById('maindiv').offsetWidth;
-                    $("#albumlist").css({
-                        "maxWidth": width - 15
-                    });
                     checkSelectedArtist();
                 }
             } catch (err) {
 
             }
             
+        };
+        function loadAlbum(id) {
+            var ol = document.getElementById('tracklist');
+            //document.getElementById('tracklist').style.display = 'none';
+            document.getElementById('tracklist').innerHTML = "";
+            
+            for (i = 0; i < __tracks__.length; i++) {
+
+                if (__tracks__[i].album_id == id) {
+                    var li = document.createElement('li');
+
+                    var img = document.createElement('img');
+                    var tracknum = document.createElement('label');
+                    tracknum.className = 'dark';
+                    tracknum.innerHTML = __tracks__[i].tracknumber + '. ';
+                    var duration = document.createElement('label');
+                    var durationdiv = document.createElement('div');
+                    var durationdivchild = document.createElement('div');
+
+                    durationdiv.className = 'duration';
+                    duration.className = 'dark';
+                    duration.innerHTML = __tracks__[i].duration;
+                    //duration.style.marginLeft = '78%';
+                    //duration.style.cssFloat = 'right';
+                    //duration.style.marginTop = '6px';
+                    durationdivchild.appendChild(duration);
+                    durationdiv.appendChild(durationdivchild);
+                    //span
+                    var helper = document.createElement('span');
+                    helper.style.display = 'inline-block';
+                    helper.style.height = '100%';
+                    helper.style.verticalAlign = 'middle';
+                    helper.style.visibility = 'hidden';
+                    //<span style="display: inline-block; height: 100%; vertical-align: middle; visibility:hidden"></span>
+
+                    //
+                    img.id = __tracks__[i].id;
+                    img.setAttribute('type', 'imgplay');
+                    //img.src = 'images/song.png';
+                    img.width = 20;
+                    img.height = 20;
+                    img.style.verticalAlign = 'middle';
+                    //img.style.marginBottom = '-8px';
+                    li.style.verticalAlign = 'middle';
+                    img.style.marginRight = '10px';
+                    img.style.styleFloat = 'left';
+                    li.setAttribute('alt', __tracks__[i].id);
+                    //li.appendChild(img);
+                    li.style.whiteSpace = 'nowrap';
+                    //li.style.width = '90%';
+                    var label = document.createElement('label');
+
+                    label.style.display = 'inline-block';
+                    label.style.maxWidth = '80%';
+                    label.style.whiteSpace = 'normal';
+                    label.setAttribute('type', 'imgplay');
+                    label.id = __tracks__[i].id;
+                    duration.id = __tracks__[i].id;
+                    duration.setAttribute('type', 'imgplay');
+                    label.innerHTML = __tracks__[i].name;
+                    //li.appendChild(helper);
+                    var div = document.createElement('div');
+                    div.id = __tracks__[i].id;
+                    div.style.height = '100%';
+                    div.setAttribute('type', 'imgplay');
+                    div.style.borderRadius = '3px';
+                    div.style.paddingLeft = '5px';
+                    div.style.paddingRight = '5px';
+                    var helper = document.createElement('span');
+                    helper.style.display = 'inline-block';
+                    helper.style.height = '100%';
+                    helper.style.verticalAlign = 'middle';
+                    helper.style.visibility = 'hidden';
+                    div.appendChild(helper);
+                    div.appendChild(tracknum);
+                    div.appendChild(label);
+                    div.appendChild(durationdiv);
+                    div.style.overflow = 'hidden';
+                    li.style.verticalAlign = 'middle';
+                    li.setAttribute('type', 'imgplay');
+                    li.id = __tracks__[i].id;
+                    div.addEventListener('dblclick', play_track)
+                    li.appendChild(div);
+                    //li.style.maxWidth = '400px';
+                    ol.appendChild(li);
+                }
+
+            }
+
+
+            document.getElementById('tracklist').style.marginBottom = '200px';
+            if (document.getElementById('tracklist').innerHTML == '') {
+                document.getElementById('tracklist').innerHTML = inner;
+            }
+        };
+        function loadArtist(id) {
+            console.log(id);
+            console.log(__albums__.length);
+            document.getElementById('albumlist').innerHTML = "";
+            document.getElementById('coverdiv').style.display = 'inline';
+            var ul = document.getElementById('albumlist');
+            var width = document.getElementById('maindiv').offsetWidth;
+            var alw = parseInt($('#coverTab').css('width'));
+
+            for (i = 0; i < __albums__.length; i++) {
+                console.log(i);
+                if (__albums__[i].artist_id == id) {
+                    var li = document.createElement('li');
+                    li.style.padding = '6px';
+                    li.style.textAlign = '-webkit-center';
+                    var img = document.createElement('img');
+                    img.style.borderRadius = '0px';
+                    img.style.borderWidth = '2px';
+                    img.style.borderColor = '#242a33';
+                    img.style.borderStyle = 'solid';
+                    img.style.padding = '0px';
+                    //img.style.paddingBottom = '2px';
+                    var label = document.createElement('label');
+                    var year = document.createElement('label');
+                    label.className = 'searchtext';
+                    //label.style.fontWeight = "bold";
+                    label.style.width = '120px';
+                    label.style.fontSize = '11px';
+                    label.innerHTML = __albums__[i].name;
+                    label.style.paddingBottom = '3px';
+                    year.className = 'searchtext';
+                    //year.style.fontWeight = "bold";
+                    year.style.width = '100px';
+                    year.style.fontSize = '9px';
+                    year.style.paddingTop = '3px';
+                    year.innerHTML = __albums__[i].year;
+                    //year.style.paddingTop = '3px';
+
+                    img.alt = __albums__[i].name + "@" + __albums__[i].artist + "@" + __albums__[i].id;
+                    var a = document.createElement('div');
+                    a.style.display = 'inline-grid';
+
+                    img.setAttribute('type', 'albumitem');
+                    img.id = __albums__[i].id;
+                    img.src = __albums__[i].cover.toString().replace("Cover.jpg", "CoverSmall.jpg");
+                    img.style.display = 'inline';
+                    img.style.minWidth = '95';
+                    img.style.minHeight = '95';
+                    img.width = '95';
+                    img.height = '95';
+                    if (((alw / 3) / 2) > 95) {
+                        img.width = ((alw / 3) / 2) - 20;
+                        img.height = ((alw / 3) / 2) - 20;
+                    }
+                    //img.style.padding = '2px';
+                    li.appendChild(a);
+                    a.appendChild(label);
+                    a.appendChild(img);
+                    a.appendChild(year);
+                    ul.appendChild(li);
+                }
+            }
+
+            var width = document.getElementById('maindiv').offsetWidth;
+            $("#albumlist").css({
+                "maxWidth": width - 15
+            });
         };
         //ulartist
         var prm = Sys.WebForms.PageRequestManager.getInstance();
